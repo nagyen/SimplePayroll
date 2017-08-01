@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using core.Models;
 using core.Domain;
 
@@ -12,7 +14,7 @@ namespace core.Services
         #region Authentication
 
         // function to register new user
-        public AuthModels.RegisterFeedback Register(User newuser)
+        public async Task<AuthModels.RegisterFeedback> Register(User newuser)
         {
             // check if valid user
             if (string.IsNullOrEmpty(newuser.Username) || string.IsNullOrEmpty(newuser.Password))
@@ -28,7 +30,7 @@ namespace core.Services
             using (var db = new AppDbContext())
             {
                 // check if username already exists
-                var prevUser = db.Users.FirstOrDefault(x => string.Equals(x.Username, newuser.Username, StringComparison.OrdinalIgnoreCase));
+                var prevUser = await db.Users.FirstOrDefaultAsync(x => string.Equals(x.Username, newuser.Username, StringComparison.OrdinalIgnoreCase));
                 if (prevUser != null)
                 {
                     return new AuthModels.RegisterFeedback
@@ -42,8 +44,8 @@ namespace core.Services
                 // if no errors add user
                 newuser.Id = 0;
                 newuser.CreateDateTime = DateTime.Now;
-                db.Users.Add(newuser);
-                db.SaveChanges();
+                await db.Users.AddAsync(newuser);
+                await db.SaveChangesAsync();
 
                 // return success
                 return new AuthModels.RegisterFeedback
@@ -55,7 +57,7 @@ namespace core.Services
         }
 
         // function to login user
-        public AuthModels.LoginFeedback Login(string username, string password)
+        public async Task<AuthModels.LoginFeedback> Login(string username, string password)
         {
             // check if valid user details
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
@@ -70,7 +72,7 @@ namespace core.Services
             using (var db = new AppDbContext())
             {
                 // check if user exists
-                var user = db.Users.FirstOrDefault(x => string.Equals(x.Username, username, StringComparison.OrdinalIgnoreCase));
+                var user = await db.Users.FirstOrDefaultAsync(x => string.Equals(x.Username, username, StringComparison.OrdinalIgnoreCase));
                 if (user == null)
                 {
                     // return error
@@ -100,8 +102,8 @@ namespace core.Services
                     CreateDateTime = DateTime.Now
                 };
 
-                db.Auths.Add(auth);
-                db.SaveChanges();
+                await db.Auths.AddAsync(auth);
+                await db.SaveChangesAsync();
 
                 // return success
                 return new AuthModels.LoginFeedback()
@@ -114,58 +116,58 @@ namespace core.Services
         }
 
         // logout current session using authkey
-        public void Logout(Guid authkey)
+        public async Task Logout(Guid authkey)
         {
             using (var db = new AppDbContext())
             {
-                var auth = db.Auths.FirstOrDefault(x => x.AuthKey == authkey);
+                var auth = await db.Auths.FirstOrDefaultAsync(x => x.AuthKey == authkey);
                 // check if exists
                 if (auth != null)
                 {
                     // remove authentication
                     db.Remove(auth);
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                 }
             }
         }
 
         // logout all user sessions by user name
-        public void Logout(string username)
+        public async Task Logout(string username)
         {
             using (var db = new AppDbContext())
             {
-                var user = db.Users.FirstOrDefault(x => x.Username.ToLower() == username.ToLower());
+                var user = await db.Users.FirstOrDefaultAsync(x => x.Username.ToLower() == username.ToLower());
                 if (user != null)
                 {
-                    Logout(user.Id);
+                    await Logout(user.Id);
                 }
 
             }
         }
 
         // logout all user sessions by id
-        public void Logout(long userId)
+        public async Task Logout(long userId)
         {
             using (var db = new AppDbContext())
             {
-                var auth = db.Auths.FirstOrDefault(x => x.UserId == userId);
+                var auth = await db.Auths.FirstOrDefaultAsync(x => x.UserId == userId);
                 // check if exists
                 if (auth != null)
                 {
                     // remove authentication
                     db.Remove(auth);
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                 }
             }
         }
 
         // function to check if a user is authenticated
-        public bool IsAuthenticated(Guid authKey)
+        public async Task<bool> IsAuthenticated(Guid authKey)
         {
             using (var db = new AppDbContext())
             {
                 // return true if auth valid
-                var auth = db.Auths.FirstOrDefault(x => x.AuthKey == authKey);
+                var auth = await db.Auths.FirstOrDefaultAsync(x => x.AuthKey == authKey);
                 return auth != null;
             }
         }
@@ -174,11 +176,11 @@ namespace core.Services
         #region User
 
         // get single user
-        public User GetUser(long id)
+        public async Task<User> GetUser(long id)
         {
             using (var db = new AppDbContext())
             {
-                return db.Users.FirstOrDefault(x => x.Id == id);
+                return await db.Users.FirstOrDefaultAsync(x => x.Id == id);
             }
         }
         
