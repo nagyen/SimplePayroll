@@ -92,5 +92,15 @@ namespace core.Services
         }
 
         #endregion
+
+        #region Payments
+
+        // todo: record payment
+        //public async Task<EmpPayModels.PaymentFeedback> RecordPayment(Payment payment)
+        //{
+            
+        //}
+
+        #endregion
     }
 }
