@@ -18,6 +18,6 @@ namespace core.Domain
         public DbSet<User> Users { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Payment> Payments { get; set; }
-
+        public DbSet<TaxPercentage> TaxPercentages { get; set; }
     }
 }

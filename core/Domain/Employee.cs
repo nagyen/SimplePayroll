@@ -11,7 +11,6 @@ namespace core.Domain
     {
         [Key]
         public long Id { get; set; }
-        public string EmplId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string SSN { get; set; }

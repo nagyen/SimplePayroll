@@ -10,7 +10,7 @@ namespace core.Models
         // Employee Add/Update Feedback
         public class EmpAddUpdateFeedback
         {
-            public string EmpId { get; set; }
+            public long EmpId { get; set; }
             public string Errors { get; set; }
             public bool Success { get; set; }
         }
@@ -18,7 +18,7 @@ namespace core.Models
         // Record Payment feedback
         public class PaymentFeedback
         {
-            public string EmpId { get; set; }
+            public long EmpId { get; set; }
             public string Errors { get; set; }
             public bool Success { get; set; }
         }
@@ -27,7 +27,7 @@ namespace core.Models
         public class ListingRequest
         {
             // custom filter
-            public string EmpId { get; set; }
+            public long EmpId { get; set; }
 
             // default filters
             public int Current { get; set; }

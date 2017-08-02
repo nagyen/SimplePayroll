@@ -11,7 +11,7 @@ namespace core.Domain
     {
         [Key]
         public long Id { get; set; }
-        public long UserId { get; set; }
+        public long EmpId { get; set; }
         public decimal GrossPay { get; set; }
         public decimal PaymentPeriodFrom { get; set; }
         public decimal PaymentPeriodTo { get; set; }
