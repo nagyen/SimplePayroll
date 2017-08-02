@@ -11,6 +11,9 @@ namespace tests
         {
             SeedTables.Run();
 
+            // user
+            var user = AsyncHelpers.RunSync(() => new UserAuthenticationService().GetUser(1));
+            Console.WriteLine($"{user.Username} - {user.Id} - {user.FirstName} - {user.CreateDateTime}");
             // taxes
             var taxes = AsyncHelpers.RunSync(() => new TaxCalculationService().GetTaxPercentages());
             foreach(var tax in taxes)

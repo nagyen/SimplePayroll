@@ -1,4 +1,6 @@
 ﻿using System;
+using core.Services;
+
 namespace core.Domain
 {
     public class SeedTables
@@ -6,6 +8,7 @@ namespace core.Domain
         public static void Run()
         {
             SeedTaxPercentages();
+            SeedUser();
         }
 
         private static void SeedTaxPercentages()
@@ -47,7 +50,23 @@ namespace core.Domain
 					db.SaveChanges();
                 }
 			}
+        }
 
+        // seed user
+        private static void SeedUser()
+        {
+            using(var db = new AppDbContext())
+            {
+                var user = new User
+                {
+                    Username = "admin",
+                    Password = "admin",
+                    FirstName = "Admin",
+                    LastName = ""
+                };
+
+                AsyncHelpers.RunSync(() => new UserAuthenticationService().Register(user));
+            }
         }
     }
 }
