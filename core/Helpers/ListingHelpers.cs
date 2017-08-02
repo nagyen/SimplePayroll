@@ -60,20 +60,6 @@ public class ListingHelpers
 	  new State("WV", "West Virginia"),
 	  new State("WI", "Wisconsin"),
 	  new State("WY", "Wyoming"),
-      //canada
-      new State("AB", "Alberta"),
-	  new State("BC", "British Columbia"),
-	  new State("MB", "Manitoba"),
-	  new State("NB", "New Brunswick"),
-	  new State("NL", "Newfoundland and Labrador"),
-	  new State("NS", "Nova Scotia"),
-	  new State("NT", "Northwest Territories"),
-	  new State("NU", "Nunavut"),
-	  new State("ON", "Ontario"),
-	  new State("PE", "Prince Edward Island"),
-	  new State("QC", "Quebec"),
-	  new State("SK", "Saskatchewan"),
-	  new State("YT", "Yukon"),
 	  };
 
 		public static List<string> Abbreviations()
