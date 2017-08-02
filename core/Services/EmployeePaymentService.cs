@@ -67,6 +67,7 @@ namespace core.Services
                     prevEmpl.Insurance = employee.Insurance;
                     prevEmpl.Retirement401k = employee.Retirement401k;
                     prevEmpl.Retirement401kPreTax = employee.Retirement401kPreTax;
+                    prevEmpl.State = employee.State;
                     db.Employees.Update(prevEmpl);
                     await db.SaveChangesAsync();
                 }
