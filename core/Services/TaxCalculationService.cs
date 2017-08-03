@@ -28,7 +28,7 @@ namespace core.Services
             // reduce 401k Pre tax
 			if (employee.Retirement401kPreTax)
 			{
-				taxableIncome = taxableIncome - (taxableIncome * employee.Retirement401kPercent);
+				taxableIncome = taxableIncome - (pay * employee.Retirement401kPercent);
 			}
 
 			// reduce w4 withholding allowances
@@ -163,5 +163,30 @@ namespace core.Services
 			// deduct tax amount from pay
 			return pay - medicareTaxAmount;
 		}
+
+        // calculate final pay after all taxes
+        public decimal CalculateFinalPayAfterDeductions(Employee employee, decimal grosspay)
+        {
+			// calculate taxable income
+			var taxableIncome = CalculateTaxableIncome(employee, grosspay);
+
+			// calculate 401k pretax
+			decimal retirement = 0;
+			if (employee.Retirement401kPreTax)
+			{
+                retirement = grosspay * employee.Retirement401kPercent;
+			}
+
+            // calculate all taxes
+            var fedTax = CalculateFedTaxAmount(taxableIncome);
+            var stateTax = CalculateStateTaxAmount(taxableIncome, employee.State);
+            var socialTax = CalculateSocialTaxAmount(grosspay);
+            var medicareTax = CalculateMedicareTaxAmount(grosspay);
+
+            // deductions
+            var finalpay = grosspay - (fedTax + stateTax + socialTax + medicareTax + employee.Insurance + retirement);
+
+            return finalpay;
+        }
     }
 }

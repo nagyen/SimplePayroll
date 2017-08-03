@@ -97,38 +97,64 @@ namespace core.Services
         #region Payments
 
         // record payment
-   //     public async Task<EmpPayModels.PaymentFeedback> RecordPayment(Payment payment)
-   //     {
-   //         // check if valid employee
-   //         var empl = await GetEmployee(payment.EmpId);
-   //         if(empl == null)
-   //         {
-   //             return new EmpPayModels.PaymentFeedback
-   //             {
-   //                 Success = false,
-   //                 Errors = "Invalid Employee."
-   //             };
-   //         }
+        public async Task<EmpPayModels.PaymentFeedback> RecordPayment(Payment payment)
+        {
+            // check if valid employee
+            var empl = await GetEmployee(payment.EmpId);
+            if(empl == null)
+            {
+                // return error
+                return new EmpPayModels.PaymentFeedback
+                {
+                    Success = false,
+                    Errors = "Invalid Employee."
+                };
+            }
 
-   //         // check if valid gross pay
-   //         if(payment.GrossPay <= 0)
-   //         {
-			//	return new EmpPayModels.PaymentFeedback
-			//	{
-			//		Success = false,
-			//		Errors = "Invalid Pay. Gross pay should be more than 0."
-			//	};
-   //         }
+            // check if valid gross pay
+            if(payment.GrossPay <= 0)
+            {
+                // return error
+				return new EmpPayModels.PaymentFeedback
+				{
+					Success = false,
+					Errors = "Invalid Pay. Gross pay should be more than 0."
+				};
+            }
 
-   //         // deductions
-   //         var taxes = new TaxCalculationService().GetTaxPercentages()
-   //         using(var db = new AppDbContext())
-   //         {
-			//	// fed tax
-   //             var taxes = 
-			//}
+            // final pay after deductions
+            var netpay = new TaxCalculationService().CalculateFinalPayAfterDeductions(empl, payment.GrossPay);
 
-        //}
+            // check if valid pay
+            if(netpay < 0)
+            {
+                // return error
+				return new EmpPayModels.PaymentFeedback
+				{
+					Success = false,
+					Errors = "Invalid Pay. Net pay cannot be less than 0."
+				};
+            }
+
+            // if here valid pay
+            // set payment fields
+            payment.NetPay = Math.Round(netpay, 2);
+            payment.CreateDateTime = DateTime.Now;
+
+            // save
+            using(var db = new AppDbContext())
+            {
+                await db.Payments.AddAsync(payment);
+                await db.SaveChangesAsync();
+            }
+
+            // return success
+            return new EmpPayModels.PaymentFeedback
+            {
+                Success = true,
+                EmpId = empl.Id
+            };
+        }
 
         #endregion
     }
