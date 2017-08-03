@@ -19,45 +19,65 @@ namespace core.Services
             }
         }
 
+        // function to calculate taxable income for emplaoyee
+        public decimal CalculateTaxableIncome(Employee employee, decimal pay)
+        {
+			// reduce Insurance
+			var taxableIncome = pay - employee.Insurance;
+
+            // reduce 401k Pre tax
+			if (employee.Retirement401kPreTax)
+			{
+				taxableIncome = taxableIncome - (taxableIncome * employee.Retirement401kPercent);
+			}
+
+			// reduce w4 withholding allowances
+			taxableIncome = taxableIncome - (decimal)(employee.W4Allowances * 168.8);
+
+            // return 
+            return taxableIncome;
+        }
+
+        // function to calculate Fed tax amount
+        public decimal CalculateFedTaxAmount(decimal taxableIncome)
+        {
+			// if taxable income < 500 no tax
+			if (taxableIncome < 500)
+			{
+				return 0;
+			}
+
+			// if taxable income > 500 && < 5000 = 3% tax
+			if (taxableIncome > 500 && taxableIncome < 5000)
+			{
+				return taxableIncome * (decimal)0.3;
+			}
+
+			// if taxable income >= 5000 && < 10,000 = 7% tax
+			if (taxableIncome >= 5000 && taxableIncome < 10000)
+			{
+				return taxableIncome * (decimal)0.7;
+			}
+
+			// everything else deduct standard fed tax percent
+			using (var db = new AppDbContext())
+			{
+				var standardFedTax = db.TaxPercentages.First(x => x.TaxCode == "FED").Percent;
+				return taxableIncome * standardFedTax;
+			}
+        }
+
         // function to calculate income after deducting fed tax
         public decimal CalculateIncomeAfterFedTax(Employee employee, decimal pay)
         {
             // calculate taxable income
+            var taxableIncome = CalculateTaxableIncome(employee, pay);
 
-            // reduce Insurance and 401k Pre tax
-            var taxableIncome = pay - employee.Insurance;
-            if(employee.Retirement401kPreTax)
-            {
-                taxableIncome = taxableIncome - (taxableIncome * employee.Retirement401kPercent);
-            }
+            // calculate fedtax amount for taxable income
+            var fedTaxAmount = CalculateFedTaxAmount(taxableIncome);
 
-            // reduce w4 withholding allowances
-            taxableIncome = taxableIncome - (decimal)(employee.W4Allowances * 168.8);
-
-			// if taxable income < 500 no tax
-			if(taxableIncome < 500)
-            {
-                return taxableIncome;
-            }
-
-            // if taxable income > 500 && < 5000 = 3% tax
-            if(taxableIncome > 500 && taxableIncome < 5000)
-            {
-                return taxableIncome - (taxableIncome * (decimal)0.3);
-            }
-
-			// if taxable income >= 5000 && < 10,000 = 7% tax
-            if (taxableIncome >= 5000 && taxableIncome < 10000)
-			{
-				return taxableIncome - (taxableIncome * (decimal)0.7);
-			}
-
-            // everything else deduct standard tax percent
-            using(var db = new AppDbContext())
-            {
-                var standardFedTax = db.TaxPercentages.First(x => x.TaxCode == "FED").Percent;
-                return taxableIncome - (taxableIncome * standardFedTax);
-            }
+            // deduct tax amount from pay
+            return pay - fedTaxAmount;
         }
     }
 }
