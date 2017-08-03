@@ -60,7 +60,7 @@ public class ListingHelpers
 		  new State("WV", "West Virginia"),
 		  new State("WI", "Wisconsin"),
 		  new State("WY", "Wyoming")
-		  };
+	    };
 
 		public static List<string> Abbreviations()
 		{

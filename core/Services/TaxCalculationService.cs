@@ -79,5 +79,89 @@ namespace core.Services
             // deduct tax amount from pay
             return pay - fedTaxAmount;
         }
+
+		// function to calculate State tax amount
+		public decimal CalculateStateTaxAmount(decimal taxableIncome, string stateCode)
+		{
+			// if taxable income < 500 no tax
+			if (taxableIncome < 500)
+			{
+				return 0;
+			}
+
+			// if taxable income > 500 && < 5000 = 1% tax
+			if (taxableIncome > 500 && taxableIncome < 5000)
+			{
+				return taxableIncome * (decimal)1.0;
+			}
+
+			// if taxable income >= 5000 && < 10,000 = 1.5% tax
+			if (taxableIncome >= 5000 && taxableIncome < 10000)
+			{
+				return taxableIncome * (decimal)1.5;
+			}
+
+			// everything else deduct standard state tax percent
+			using (var db = new AppDbContext())
+			{
+                var standardFedTax = db.TaxPercentages.First(x => x.TaxCode == stateCode).Percent;
+				return taxableIncome * standardFedTax;
+			}
+		}
+
+		// function to calculate income after deducting state tax
+		public decimal CalculateIncomeAfterStateTax(Employee employee, decimal pay)
+		{
+			// calculate taxable income
+			var taxableIncome = CalculateTaxableIncome(employee, pay);
+
+			// calculate employee's state tax amount for taxable income
+            var stateTaxAmount = CalculateStateTaxAmount(taxableIncome, employee.State);
+
+			// deduct tax amount from pay
+			return pay - stateTaxAmount;
+        }
+
+		// function to calculate Social security tax amount
+		public decimal CalculateSocialTaxAmount(decimal grossPay)
+		{
+			// deduct standard social security tax percent
+			using (var db = new AppDbContext())
+			{
+				var standardSocialTax = db.TaxPercentages.First(x => x.TaxCode == "SOCIAL").Percent;
+                return grossPay * standardSocialTax;
+			}
+		}
+
+		// function to calculate income after deducting social security tax
+		public decimal CalculateIncomeAfterSocialTax(decimal pay)
+		{
+			// calculate social tax amount for total income
+			var socialTaxAmount = CalculateSocialTaxAmount(pay);
+
+			// deduct tax amount from pay
+			return pay - socialTaxAmount;
+		}
+
+		// function to calculate Medicare security tax amount
+		public decimal CalculateMedicareTaxAmount(decimal grossPay)
+		{
+			// deduct standard social security tax percent
+			using (var db = new AppDbContext())
+			{
+				var standardMedicareTax = db.TaxPercentages.First(x => x.TaxCode == "MEDICARE").Percent;
+				return grossPay * standardMedicareTax;
+			}
+		}
+
+		// function to calculate income after deducting social security tax
+		public decimal CalculateIncomeAfterMedicareTax(decimal pay)
+		{
+			// calculate social tax amount for total income
+			var medicareTaxAmount = CalculateMedicareTaxAmount(pay);
+
+			// deduct tax amount from pay
+			return pay - medicareTaxAmount;
+		}
     }
 }
