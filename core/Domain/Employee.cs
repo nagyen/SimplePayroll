@@ -16,7 +16,8 @@ namespace core.Domain
         public string State { get; set; }
         public string SSN { get; set; }
         public decimal Insurance { get; set; }
-        public int Retirement401k { get; set; }
+        public int W4Allowances { get; set; }
+        public decimal Retirement401kPercent { get; set; }
         public bool Retirement401kPreTax { get; set; }
         public DateTime CreateDateTime { get; set; }
     }

@@ -65,7 +65,7 @@ namespace core.Services
 
                     // if here update employee
                     prevEmpl.Insurance = employee.Insurance;
-                    prevEmpl.Retirement401k = employee.Retirement401k;
+                    prevEmpl.Retirement401kPercent = employee.Retirement401kPercent;
                     prevEmpl.Retirement401kPreTax = employee.Retirement401kPreTax;
                     prevEmpl.State = employee.State;
                     db.Employees.Update(prevEmpl);
@@ -99,8 +99,9 @@ namespace core.Services
         // record payment
    //     public async Task<EmpPayModels.PaymentFeedback> RecordPayment(Payment payment)
    //     {
-   //         // check if valid employee id
-   //         if(payment.EmpId <= 0)
+   //         // check if valid employee
+   //         var empl = await GetEmployee(payment.EmpId);
+   //         if(empl == null)
    //         {
    //             return new EmpPayModels.PaymentFeedback
    //             {
@@ -120,10 +121,11 @@ namespace core.Services
    //         }
 
    //         // deductions
+   //         var taxes = new TaxCalculationService().GetTaxPercentages()
    //         using(var db = new AppDbContext())
    //         {
 			//	// fed tax
-   //             //var taxes = db.p
+   //             var taxes = 
 			//}
 
         //}
