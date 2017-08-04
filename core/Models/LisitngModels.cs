@@ -39,6 +39,7 @@ namespace core.Models
         // employee listing row
         public class ListingItem
         {
+            public long EmpId { get; set; }
             public string FullName { get; set; }
             public string State { get; set; }
             public string LastPaymentDate { get; set; }

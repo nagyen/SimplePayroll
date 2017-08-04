@@ -65,10 +65,13 @@ App.module("Angular", function(moduleScope) {
     }
 });
 
-
-
-
-$("#grid-basic").bootgrid();
+$("#grid-basic").bootgrid({
+    ajax: true,
+    post: {},
+    url: $("#grid-basic").data("url"),
+    formatters: {},
+    rowCount: [25, 50, -1]
+});
 $("#date-picker").datepicker({
     autoclose: true,
     todayHighlight: true

@@ -10,28 +10,33 @@ namespace web.Controllers
 {
     public class ListingController : BaseController
     {
-        public ListingController(IUserAuthenticationService auth) : base(auth)
+        private IListingService ListingService { get; }
+
+        public ListingController(IUserAuthenticationService auth,
+                                 IListingService listingService) : base(auth)
         {
+            ListingService = listingService;
         }
 
 		// employee listing screen
 		public async Task<IActionResult> Index()
         {
             // check auth
-            if (!await CheckAccess())
-            {
-                return Redirect("/");
-            }
+            //if (!await CheckAccess())
+            //{
+            //    return Redirect("/");
+            //}
 
             return View();
         }
 
         // get employee listing results filtered
         [HttpPost]
-        public IActionResult GetListFiltered([FromBody]LisitngModels.ListingRequest request)
+        public async Task<IActionResult> GetListFiltered(LisitngModels.ListingRequest request)
         {
             // todo: return filtered list
-            return Json(0);
+            return Ok(await ListingService.GetListFiltered(request));
         }
+
     }
 }

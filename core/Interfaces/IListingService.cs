@@ -6,7 +6,7 @@ using core.Models;
 
 namespace core
 {
-    interface IListingService
+    public interface IListingService
     {
         Task<LisitngModels.ListingResult> GetListFiltered(LisitngModels.ListingRequest request);
     }

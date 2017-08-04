@@ -13,25 +13,19 @@ namespace core.Services
 {
     public class ListingService: IListingService
     {
-        private IEmployeePaymentService EmployeePaymentService { get; set; }
-
-        public ListingService(IEmployeePaymentService employeePaymentService)
-        {
-            EmployeePaymentService = employeePaymentService;
-        }
-
+        // get employee list filtered
         public async Task<LisitngModels.ListingResult> GetListFiltered(LisitngModels.ListingRequest request)
         {
             // filters
             var filters = new List<Expression<Func<Employee, bool>>>();
 
-            // employee name
+            // employee name filter
             if (request.EmpId.HasValue)
             {
                 filters.Add(x => x.Id == request.EmpId);
             }
 
-            // state
+            // state filter
             if (!string.IsNullOrEmpty(request.State))
             {
                 filters.Add(x => x.State == request.State);
@@ -48,12 +42,13 @@ namespace core.Services
             {
                 filters.Add(x => x.Payments.Any(y => y.CreateDateTime <= request.PayPostingTo));
             }
-
-            var filteredList = new List<Employee>();
+            
+            // get the filtered list
+            List<Employee> filteredList;
             using (var db = new AppDbContext())
             {
                 // get all employees with their payments
-                var employees = db.Employees.OrderByDescending(x => x.CreateDateTime).Include(x => x.Payments.OrderByDescending(y => y.CreateDateTime)).AsQueryable();
+                var employees = db.Employees.OrderByDescending(x => x.CreateDateTime).Include(x => x.Payments).AsQueryable();
 
                 // apply filters
                 if (filters.Any())
@@ -115,6 +110,7 @@ namespace core.Services
             var ytdPay = employee.Payments.Where(x => x.CreateDateTime > new DateTime(DateTime.Now.Year, 1, 1)).Sum(x => x.GrossPay);
             return new LisitngModels.ListingItem
             {
+                EmpId = employee.Id,
                 FullName = $"{employee.FirstName} {employee.LastName}",
                 State = employee.State,
                 LastPaymentDate = lastPayment?.CreateDateTime.ToString("d") ?? "",
@@ -167,15 +163,13 @@ namespace core.Services
                 {
                     if (dir == "desc")
                     {
-                        return rows.OrderByDescending(x => sortFunc(x)).ToList();
+                        return rows.OrderByDescending(sortFunc).ToList();
                     }
                     else
                     {
-                        return rows.OrderBy(x => sortFunc(x)).ToList();
+                        return rows.OrderBy(sortFunc).ToList();
                     }
                 }
-
-                return rows;
             }
 
             // if here, reutrn the original list
