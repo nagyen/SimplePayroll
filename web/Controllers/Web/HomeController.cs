@@ -10,8 +10,7 @@ namespace web.Controllers
 {
     public class HomeController : BaseController
     {
-        public HomeController(IUserAuthenticationService auth, 
-                              IEmployeePaymentService emp) : base(auth)
+        public HomeController(IUserAuthenticationService auth) : base(auth)
         {
         }
 
@@ -26,19 +25,6 @@ namespace web.Controllers
 
             // else show login page
             return View();
-        }
-
-        // employee listing screen
-        public IActionResult Listing()
-        {
-            return View();
-        }
-
-        // get employee listing results filtered
-        public IActionResult GetListFiltered([FromBody]EmpPayModels.ListingRequest request)
-        {
-            // todo: return filtered list
-            return Json(0);
         }
 
         // error

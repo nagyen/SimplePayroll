@@ -36,6 +36,8 @@ namespace web
             services.AddTransient<IUserAuthenticationService, UserAuthenticationService>();
             services.AddTransient<IEmployeePaymentService, EmployeePaymentService>();
 
+            // seed tables
+            core.Domain.SeedTables.Run();
 		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

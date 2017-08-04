@@ -24,8 +24,10 @@ namespace web.Controllers
                 // set auth key for session
                 SetAuth(res.UserId, res.AuthKey);
 
-                return SuccessResponse("/account");
+                // return to listing screen on login
+                return SuccessResponse("/listing");
             }
+
             // return error
             return ErrorResponse(res.Errors);
         }
