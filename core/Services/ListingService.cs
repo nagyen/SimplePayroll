@@ -98,7 +98,7 @@ namespace core.Services
             {
                 Current = request.Current,
                 RowCount = request.RowCount,
-                Total = partialList.Count,
+                Total = filteredList.Count,
                 Rows = partialList
             };
         }

@@ -34,7 +34,7 @@ namespace web.Controllers
         [HttpPost]
         public async Task<IActionResult> GetListFiltered(LisitngModels.ListingRequest request)
         {
-            // todo: return filtered list
+            // return filtered list
             return Ok(await ListingService.GetListFiltered(request));
         }
 
