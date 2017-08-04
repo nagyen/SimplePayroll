@@ -1,4 +1,4 @@
-﻿angular.module("app")
+﻿App.Angular.getModule()
 .controller("LoginController", ["$scope", "$http", function($scope, $http){
     //debug
     $scope.DEBUG = true;
