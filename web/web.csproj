@@ -20,6 +20,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\Api\" />
+    <Folder Include="wwwroot\lib\angular\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\core\core.csproj" />
+  </ItemGroup>
 </Project>

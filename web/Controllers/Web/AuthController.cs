@@ -2,26 +2,67 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using core;
+using core.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace web.Controllers
 {
-    public class AuthController : Controller
+    public class AuthController : BaseController
     {
-        public IActionResult Index()
+        public AuthController(IUserAuthenticationService auth) : base(auth)
         {
-            return View();
         }
 
-        public IActionResult Logout()
+		[HttpPost]
+        public async Task<IActionResult> Login([FromBody]AuthModels.Login login)
         {
-            // todo: logout
-            return Redirect("/");
+            // login 
+            var res = await Authservice.Login(login.Username, login.Password);
+            if (res.Success)
+            {
+                // set auth key for session
+                SetAuth(res.UserId, res.AuthKey);
+
+                return SuccessResponse("/account");
+            }
+            // return error
+            return ErrorResponse(res.Errors);
         }
-        
-        public IActionResult Error()
+
+        [HttpPost]
+        public async Task<IActionResult> Register([FromBody]AuthModels.Register register)
         {
-            return View();
+            // check passwords
+            if (register.Password != register.ConfirmPassword)
+            {
+                return ErrorResponse("Passwords not matched.");
+            }
+
+            // define user
+            var newuser = new core.Domain.User
+            {
+                Username = register.Username,
+                Password = register.Password,
+                FirstName = register.FirstName,
+                LastName = register.LastName
+            };
+
+            // register user 
+            var res = await Authservice.Register(newuser);
+            if (res.Success)
+            {
+                return SuccessResponse("/");
+            }
+            // return error
+            return ErrorResponse(res.Errors);
+        }
+
+        // logout
+        public async Task<IActionResult> Logout()
+        {
+            await Authservice.Logout(GetCurrentUser());
+            return Redirect("/");
         }
     }
 }
