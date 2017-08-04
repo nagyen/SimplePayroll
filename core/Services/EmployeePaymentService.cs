@@ -9,8 +9,14 @@ using core.Domain;
 
 namespace core.Services
 {
-    public class EmployeePaymentService
+    public class EmployeePaymentService: IEmployeePaymentService
     {
+        // constructor
+        public EmployeePaymentService()
+        {
+            
+        }
+
         #region Employee
         
         // add or update employee
@@ -71,7 +77,6 @@ namespace core.Services
                     db.Employees.Update(prevEmpl);
                     await db.SaveChangesAsync();
                 }
-
 
                 // if here success
                 return new EmpPayModels.EmpAddUpdateFeedback

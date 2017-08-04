@@ -9,7 +9,7 @@ using core.Domain;
 
 namespace core.Services
 {
-    public class UserAuthenticationService
+    public class UserAuthenticationService: IUserAuthenticationService
     {
         #region Authentication
 

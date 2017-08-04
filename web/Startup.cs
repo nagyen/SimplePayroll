@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using core;
+using core.Services;
 
 namespace web
 {
@@ -29,7 +31,12 @@ namespace web
         {
             // Add framework services.
             services.AddMvc();
-        }
+
+            // configure IOC containers
+            services.AddTransient<IUserAuthenticationService, UserAuthenticationService>();
+            services.AddTransient<IEmployeePaymentService, EmployeePaymentService>();
+
+		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
