@@ -76,6 +76,6 @@
         $scope.model.Password = "";
         $scope.model.FirstName = "";
         $scope.model.LastName = "";
-        $scope.model.ConfirmPassword = ""
+        $scope.model.ConfirmPassword = "";
     }
 }]);

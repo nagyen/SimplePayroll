@@ -10,8 +10,7 @@ namespace web.Controllers
 {
     public class ListingController : BaseController
     {
-        public ListingController(IUserAuthenticationService auth, 
-                              IEmployeePaymentService emp) : base(auth)
+        public ListingController(IUserAuthenticationService auth) : base(auth)
         {
         }
 
@@ -28,7 +27,8 @@ namespace web.Controllers
         }
 
         // get employee listing results filtered
-        public IActionResult GetListFiltered([FromBody]EmpPayModels.ListingRequest request)
+        [HttpPost]
+        public IActionResult GetListFiltered([FromBody]LisitngModels.ListingRequest request)
         {
             // todo: return filtered list
             return Json(0);

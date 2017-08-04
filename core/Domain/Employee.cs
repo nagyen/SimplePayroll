@@ -20,5 +20,7 @@ namespace core.Domain
         public decimal Retirement401kPercent { get; set; }
         public bool Retirement401kPreTax { get; set; }
         public DateTime CreateDateTime { get; set; }
+
+        public ICollection<Payment> Payments { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using core.Models;
 using core.Domain;
@@ -13,7 +14,16 @@ namespace core
 		// get single employee by empl id
 		Task<Employee> GetEmployee(long id);
 
+        // get all employees
+        Task<List<Employee>> GetAllEmployees();
+
         // record payment
         Task<EmpPayModels.PaymentFeedback> RecordPayment(Payment payment);
+
+        // get all employee with payments
+        Task<IEnumerable<Employee>> GetAllEmployeesWithPayments();
+
+        // get all payments for employee
+        Task<IEnumerable<Payment>> GetAllPaymentsForEmployee(long empId);
     }
 }
