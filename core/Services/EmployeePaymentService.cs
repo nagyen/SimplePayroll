@@ -97,6 +97,25 @@ namespace core.Services
             }
         }
 
+        // get all employees
+        public async Task<List<Employee>> GetAllEmployees()
+        {
+            using (var db = new AppDbContext())
+            {
+                // check if employee exists
+                return await db.Employees.ToListAsync();
+            }
+        }
+
+        // get all employee with payments
+        public async Task<IEnumerable<Employee>> GetAllEmployeesWithPayments()
+        {
+            using (var db = new AppDbContext())
+            {
+                return await db.Employees.Include(x => x.Payments).ToListAsync();
+            }
+        }
+
         #endregion
 
         #region Payments
@@ -159,6 +178,15 @@ namespace core.Services
                 Success = true,
                 EmpId = empl.Id
             };
+        }
+
+        // get all payments for employee
+        public async Task<IEnumerable<Payment>> GetAllPaymentsForEmployee(long empId)
+        {
+            using (var db = new AppDbContext())
+            {
+                return await db.Payments.Where(x => x.EmpId == empId).ToListAsync();
+            }
         }
 
         #endregion

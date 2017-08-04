@@ -9,6 +9,7 @@ namespace core.Domain
         {
             SeedTaxPercentages();
             SeedUser();
+            SeedEmployees();
         }
 
         private static void SeedTaxPercentages()
@@ -55,17 +56,32 @@ namespace core.Domain
         // seed user
         private static void SeedUser()
         {
-            using(var db = new AppDbContext())
+            var user = new User
             {
-                var user = new User
-                {
-                    Username = "admin",
-                    Password = "admin",
-                    FirstName = "Admin",
-                    LastName = ""
-                };
+                Username = "admin",
+                Password = "admin",
+                FirstName = "Admin",
+                LastName = ""
+            };
 
-                AsyncHelpers.RunSync(() => new UserAuthenticationService().Register(user));
+            AsyncHelpers.RunSync(() => new UserAuthenticationService().Register(user));
+        }
+
+        private static void SeedEmployees()
+        {
+            using (var db = new AppDbContext())
+            {
+                for (var i = 0; i < 100; i++)
+                {
+                    var employee = new Employee
+                    {
+                        FirstName = "test",
+                        LastName = $"{i}",
+                        State = "FL"
+                    };
+                    db.Employees.Add(employee);
+                }
+                db.SaveChanges();
             }
         }
     }

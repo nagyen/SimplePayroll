@@ -7,6 +7,18 @@
   <PropertyGroup>
     <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <Content Include="wwwroot\lib\date-picker\css\bootstrap-datepicker3.min.css" />
+    <Content Include="wwwroot\lib\font-awesome\css\font-awesome.css" />
+    <Content Include="wwwroot\lib\font-awesome\css\font-awesome.min.css" />
+    <Content Include="wwwroot\lib\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="wwwroot\lib\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="wwwroot\lib\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="wwwroot\lib\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="wwwroot\lib\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="wwwroot\lib\font-awesome\fonts\FontAwesome.otf" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
@@ -22,6 +34,9 @@
     <Folder Include="Controllers\Api\" />
     <Folder Include="wwwroot\lib\angular\" />
     <Folder Include="Views\Listing\" />
+    <Folder Include="wwwroot\lib\bootgrid\" />
+    <Folder Include="wwwroot\lib\date-picker\js\" />
+    <Folder Include="wwwroot\lib\bootbox\" />
   </ItemGroup>
 
   <ItemGroup>

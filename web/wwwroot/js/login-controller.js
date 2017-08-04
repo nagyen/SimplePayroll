@@ -1,4 +1,4 @@
-﻿angular.module("app")
+﻿App.Angular.getModule()
 .controller("LoginController", ["$scope", "$http", function($scope, $http){
     //debug
     $scope.DEBUG = true;
@@ -76,6 +76,6 @@
         $scope.model.Password = "";
         $scope.model.FirstName = "";
         $scope.model.LastName = "";
-        $scope.model.ConfirmPassword = ""
+        $scope.model.ConfirmPassword = "";
     }
 }]);
