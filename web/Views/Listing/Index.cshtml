@@ -3,18 +3,19 @@
     ViewData["LoggedIn"] = true;
 }
 
-
 <h1>Employee Listing</h1>
-<input type="text" id="date-picker"/>
-<button type="button" onclick="bootboxtest()">test</button>
-<table id="grid-basic" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true" data-url="/listing/getListFiltered">
-    <thead>
-    <tr>
-        <th data-column-id="fullName" data-type="numeric" data-identifier="true" data-formatter="link">Employee</th>
-        <th data-column-id="state">State</th>
-        <th data-column-id="lastPaymentDate">Last Payment Date</th>
-        <th data-column-id="lastPaymentAmount">Last Payment Amount</th>
-        <th data-column-id="ytdPay">YTD Pay</th>
-    </tr>
-    </thead>
-</table>
+
+<div ng-controller="ListingController" ng-init="init()">
+	
+	<table id="employee-listing" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true" data-url="/listing/getListFiltered">
+	    <thead>
+	    <tr>
+	        <th data-column-id="fullName" data-type="numeric" data-identifier="true" data-formatter="link">Employee</th>
+	        <th data-column-id="state">State</th>
+	        <th data-column-id="lastPaymentDate">Last Payment Date</th>
+	        <th data-column-id="lastPaymentAmount">Last Payment Amount</th>
+	        <th data-column-id="ytdPay">YTD Pay</th>
+	    </tr>
+	    </thead>
+	</table>
+</div>
