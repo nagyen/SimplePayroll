@@ -12,7 +12,7 @@ App.Angular.getModule()
     // init
     $scope.init = function (empId) {
         // get employee details
-        $http.get("/api/employee/"+ empId)
+        $http.get("/api/employee/" + empId)
             .success(function (res) {
                $scope.model.employee = res; 
             });

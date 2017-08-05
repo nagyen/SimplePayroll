@@ -82,9 +82,9 @@ namespace core.Domain
                         State = SeedingHelpers.StatesGenerator.GetRandomState().Abbreviation,
                         W4Allowances = random.Next(0, 4),
                         SSN = SeedingHelpers.SSNGenerator.UniqueSSNs[i],
-                        Insurance = (decimal)(random.NextDouble() * 50),
+                        Insurance = (decimal)Math.Round(random.NextDouble() * 50, 0),
                         Retirement401kPreTax = random.NextDouble() > 0.5,
-                        Retirement401kPercent = (decimal)(random.NextDouble() * 6),
+                        Retirement401kPercent = (decimal)Math.Round(random.NextDouble() * 6, 0),
                         CreateDateTime = SeedingHelpers.DateGenerator.GetRandomDate(DateTime.Now.AddYears(-5), DateTime.Now)
                     };
                     // add to table
@@ -95,13 +95,13 @@ namespace core.Domain
             }
         }
 
-   //     private static void SeedPayments()
-   //     {
-   //         using(var db = new AppDbContext())
-   //         {
-			//    var employees = 
-
-			//}
-        //}
+//        private static void SeedPayments()
+//        {
+//            using(var db = new AppDbContext())
+//            {
+//			    var employees = 
+//
+//			}
+//        }
     }
 }

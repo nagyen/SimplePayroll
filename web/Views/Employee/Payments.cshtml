@@ -44,7 +44,7 @@
 						<div class="col-sm-4">
 							<div class="form-group">
 								<label>SSN</label>
-								<div class="field-readonly">{{model.employee.ssn}}</div>
+								<div class="field-readonly">{{model.employee.ssn | ssnFormat:true}}</div>
 							</div>
 						</div>
 						<div class="col-sm-4">
