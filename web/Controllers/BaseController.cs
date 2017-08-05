@@ -67,6 +67,12 @@ namespace web.Controllers
 		// check if user is authenticated
 		public async Task<bool> CheckAccess()
 		{
+			// allow access for local development
+			if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+			{
+				return true;
+			}
+			
 			// check if auth key is valid
 			if (Guid.TryParse(GetAuthKey(), out Guid authkey))
 			{

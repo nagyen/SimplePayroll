@@ -7,7 +7,7 @@ App.module("Form", function(moduleScope) {
             autoclose: true,
             todayHighlight: true
         });
-    } 
+    };
 
     // init
     moduleScope.init = function() {

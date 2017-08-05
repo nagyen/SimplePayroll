@@ -1,9 +1,114 @@
-﻿@model long
+﻿@using core
+@model long
 @{
     ViewBag.Title = "Employee";
     ViewData["LoggedIn"] = true;
     var empId = Model;
-    
+	var statesList = DropdownListHelpers.GetStatesList();
 }
 
-<h2>employee @empId</h2>
+<div ng-controller="EmpPaymentsController" ng-init="init(@empId)" ng-cloak>
+	<h2>Employee: {{model.employee.firstName}} {{model.employee.lastName}}</h2>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">Employee Details</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label for="FirstName">First Name</label>
+								<input type="text" class="form-control" id="FirstName" ng-model="model.employee.firstName" min="0" required>
+							</div>                     
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label for="LastName">Last Name</label>
+								<input type="text" class="form-control" id="LastName" ng-model="model.employee.lastName" min="0" required>
+							</div>                     
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label>State</label>
+								<select class="form-control" ng-model="model.employee.state">
+									@foreach (var state in statesList)
+									{
+										<option value="@state.Value">@state.Text</option>
+									}
+								</select>
+							</div>   
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label>SSN</label>
+								<div class="field-readonly">{{model.employee.ssn}}</div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label for="Insurance">Insurance</label>
+								<input type="number" class="form-control" id="Insurance" ng-model="model.employee.insurance" min="0" required>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label for="W4Allowances">W4 Allowances</label>
+								<input type="number" class="form-control" id="W4Allowances" ng-model="model.employee.w4Allowances" min="0" required>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label for="Retirement401kPercent">401k %</label>
+								<input type="number" class="form-control" id="Retirement401kPercent" ng-model="model.employee.retirement401kPercent" min="0" required>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="checkbox">
+								<label><input type="checkbox" id="Retirement401kPreTax" ng-model="model.employee.retirement401kPreTax">401k Pre Tax</label>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+
+			<div class="panel panel-primary">
+				<div class="panel-heading">Pay History</div>
+				<div class="panel-body">
+					<div class="btn-group" role="group" aria-label="Basic example">
+						<button type="button" class="btn btn-default" ng-click="refreshTransactions(model.transactionsPage - 1)" ng-disabled="model.transactionsPage == 1"><span class="glyphicon glyphicon-menu-left"></span>Prev</button>
+						<button type="button" class="btn btn-default">{{model.transactionsPage}}</button>
+						<button type="button" class="btn btn-default" ng-click="refreshTransactions(model.transactionsPage +  1)" ng-disabled="model.transactions.length < 10">Next<span class="glyphicon glyphicon-menu-right"></span></button>
+					</div>
+					<table class="table table-stripped">
+						<thead>
+						<tr>
+							<th>Date</th>
+							<th class="text-center">Type</th>
+							<th class="text-center">Amount</th>
+							<th class="text-center">Previous Balance</th>
+							<th class="text-center">New Balance</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="trans in model.transactions">
+							<td>{{trans.date}}</td>
+							<td class="text-center">{{trans.type}}</td>
+							<td class="text-center">{{trans.amount | currency}}</td>
+							<td class="text-center">{{trans.prevBalance | currency}}</td>
+							<td class="text-center">{{trans.currentBalance | currency}}</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<pre>{{model | json}}</pre>
+</div>
