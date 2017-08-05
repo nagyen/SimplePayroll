@@ -14,38 +14,28 @@
     $scope.init = function(){
         // make listing 
         makeListing();
-    }
+    };
 
     // function that makes listing
     var makeListing = function(){
         var model = $scope.model;
 
-        // remove current listing
-        //$("#employee-listing").bootgrid("destroy");
-
         // filters
-        var filters = function (){
-            return {
-                empId: model.empId,
-                state: model.state,
-                payPostingFrom: model.payPostingFrom,
-                payPostingTo: model.payPostingTo
-            }
+        var filters = function (req){
+            $("[data-listing-filter]").each(function () {
+                var id =  $(this).data("listing-filter");
+                req[id] = $(this).val();
+            });
+            return req;
         };
 
         // make grid
         $("#employee-listing").bootgrid({
             ajax: true,
             url: "/listing/getListFiltered",
-            requestHandler: function(req) {
-                req.empId = model.empId;
-                req.state = model.state,
-                req.payPostingFrom = model.payPostingFrom,
-                req.payPostingTo = model.payPostingTo
-                return req;
-            },
+            requestHandler: filters,
             formatters: {},
-            rowCount: [25, 50, -1]
+            rowCount: [10, 25, -1]
         }).on("loaded.rs.jquery.bootgrid", function (e) {
             // move any header appends
             $("[data-bootgrid-append]")
@@ -53,13 +43,13 @@
             .removeAttr("data-bootgrid-append");
 	    });
 
-    }
+    };
 
     // watch filter changes
     $scope.$watchGroup(["model.empId", "model.state", "model.payPostingFrom", "model.payPostingTo"], function(){
         // reload listing
-        //$("#employee-listing").bootgrid("reload")
+        $("#employee-listing").bootgrid("reload")
     })
 
 
-}])
+}]);

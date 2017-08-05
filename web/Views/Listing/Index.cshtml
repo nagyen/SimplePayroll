@@ -9,13 +9,13 @@
 <div ng-controller="ListingController" ng-init="init()">
     <div class="hidden">    
 		<div class="search form-group" data-bootgrid-append="header">
-            <input type="text" class="form-control" placeholder="Pay Date From" data-date-picker ng-model="model.payPostingFrom">
+            <input type="text" class="form-control" placeholder="Pay Date From" data-date-picker data-listing-filter="payPostingFrom" ng-model="model.payPostingFrom">
         </div>
 		<div class="search form-group" data-bootgrid-append="header">
-            <input type="text" class="form-control" placeholder="Pay Date End" data-date-picker ng-model="model.payPostingTo">
+            <input type="text" class="form-control" placeholder="Pay Date End" data-date-picker data-listing-filter="payPostingTo" ng-model="model.payPostingTo">
         </div>
 		<div class="search form-group" data-bootgrid-append="header">
-            <select class="form-control" ng-model="model.empId">
+            <select class="form-control" data-listing-filter="empId" ng-model="model.empId">
                 <option value="">Show All Employees</option>
                 @foreach(var empl in Model.EmplList)
 				{
@@ -24,7 +24,7 @@
             </select>
         </div>
 		<div class="search form-group" data-bootgrid-append="header">
-            <select class="form-control" ng-model="model.state">
+            <select class="form-control" data-listing-filter="state" ng-model="model.state">
                 <option value="">Show All States</option>
                 @foreach(var state in Model.StatesList)
                 {
