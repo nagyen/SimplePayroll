@@ -24,7 +24,7 @@ namespace web.Controllers
 		// employee listing screen
 		public async Task<IActionResult> Index()
         {
-            // check auth
+            // todo: check auth
             //if (!await CheckAccess())
             //{
             //    return Redirect("/");

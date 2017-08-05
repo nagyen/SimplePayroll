@@ -63,7 +63,10 @@ namespace web.Controllers
         // logout
         public async Task<IActionResult> Logout()
         {
-            await Authservice.Logout(GetCurrentUser());
+            if (await CheckAccess())
+            {
+                await Authservice.Logout(GetCurrentUser());
+            }
             return Redirect("/");
         }
     }
