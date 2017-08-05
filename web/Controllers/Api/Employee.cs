@@ -5,7 +5,7 @@ using core;
 
 namespace web.Controllers
 {
-    [Route("/api/employee")]
+    [Route("/api/[controller]")]
     public class Employee : BaseController
     {
         private IEmployeePaymentService EmployeeService { get; set; }
@@ -31,7 +31,7 @@ namespace web.Controllers
 				var emp = await EmployeeService.GetEmployee(id);
 				return Ok(emp);
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 return ErrorResponse("Error while loading employee");
             }
@@ -51,9 +51,14 @@ namespace web.Controllers
 				}
 				// return add/update respose
                 var res = await EmployeeService.AddUpdateEmployee(employee);
-				return Ok(res);
+                if(res.Success)
+                {
+				    return Ok(res);
+                }
+                // return error
+                return ErrorResponse(res.Errors);
             }
-			catch (Exception e)
+			catch (Exception)
 			{
 				return ErrorResponse("Error while saving employee");
 			}

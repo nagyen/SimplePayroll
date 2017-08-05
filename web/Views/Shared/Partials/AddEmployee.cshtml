@@ -1,0 +1,85 @@
+﻿﻿@using core;
+@using core.Models;
+﻿﻿@{
+    Layout = null;
+	var statesList = SeedingHelpers.StatesGenerator.List
+	                .Select(x => new GenericModels.DropdownListItem
+	                {
+	                    Value = x.Abbreviation,
+	                    Text = $"{x.Name}"
+	                });
+}
+<div ng-controller="AddEmployeeController">
+	<div class="row">
+        <div class="col-sm-12">
+			<form name="frm">
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="form-group">
+		                  <label for="FirstName">First Name</label>
+		                  <input type="text" class="form-control" id="FirstName" ng-model="model.firstName" required>
+		                </div>
+					</div>
+					<div class="col-sm-4">
+						<div class="form-group">
+		                  <label for="LastName">Last Name</label>
+		                  <input type="text" class="form-control" id="LastName" ng-model="model.lastName" required>
+		                </div>
+					</div>
+					<div class="col-sm-4">
+                        <div class="form-group">
+                          <label for="State">State</label>
+	                        <select class="form-control" id="State" ng-model="model.state" required>
+	                            @foreach(var state in statesList)
+	                            {
+	                                <option value="@state.Value">@state.Text</option>
+	                            }
+	                        </select>
+                        </div>
+					</div>               
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="form-group">
+                        	<label for="SSN">SSN</label>
+							<input type="text" class="form-control" id="SSN" ng-model="model.ssn" ssn placeholder="###-##-####" required>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<div class="form-group">
+                        	<label for="Insurance">Insurance</label>
+							<input type="number" class="form-control" id="insurance" ng-model="model.insurance" min="0" required>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<div class="form-group">
+                        	<label for="W4Allowances">W4 Allowances</label>
+							<input type="number" class="form-control" id="W4Allowances" ng-model="model.w4Allowances" min="0" required>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="form-group">
+                        	<label for="Retirement401kPercent">401k %</label>
+							<input type="number" class="form-control" id="Retirement401kPercent" ng-model="model.retirement401kPercent" min="0" required>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<div class="checkbox">
+                        	<label><input type="checkbox" id="Retirement401kPreTax" ng-model="model.retirement401kPreTax">401k Pre Tax</label>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6 col-sm-offset-6 text-right">
+						<span class="text-danger" ng-bind="status.validationErrors"></span>
+						<a href="javascript:;;" class="btn btn-link" ng-click="cancel()">Cancel</a>						
+						<a href="javascript:;;" class="btn btn-primary" ng-click="add()">Add Employee</a>
+					</div>
+				</div>
+		    </form>
+		</div>
+	</div>
+	<pre>{{model | json}}</pre>
+</div>

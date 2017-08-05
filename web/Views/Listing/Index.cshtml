@@ -7,12 +7,14 @@
 <h1>Employee Listing</h1>
 
 <div ng-controller="ListingController" ng-init="init()">
+	
+	<a href="javascript:;;" class="btn btn-primary" ng-click="addNew()">Add New Employee</a>
     <div class="hidden">    
 		<div class="search form-group" data-bootgrid-append="header">
-            <input type="text" class="form-control" placeholder="Pay Date From" data-date-picker data-listing-filter="payPostingFrom" ng-model="model.payPostingFrom">
+            <input type="text" class="form-control" placeholder="Pay Date From" data-date-picker="" data-listing-filter="payPostingFrom" ng-model="model.payPostingFrom">
         </div>
 		<div class="search form-group" data-bootgrid-append="header">
-            <input type="text" class="form-control" placeholder="Pay Date End" data-date-picker data-listing-filter="payPostingTo" ng-model="model.payPostingTo">
+            <input type="text" class="form-control" placeholder="Pay Date End" data-date-picker="" data-listing-filter="payPostingTo" ng-model="model.payPostingTo">
         </div>
 		<div class="search form-group" data-bootgrid-append="header">
             <select class="form-control" data-listing-filter="empId" ng-model="model.empId">

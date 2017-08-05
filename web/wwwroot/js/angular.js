@@ -1,4 +1,4 @@
-﻿// build angular module
+﻿﻿// build angular module
 App.module("Angular", function(moduleScope) {
 
     // ng-app
@@ -19,11 +19,9 @@ App.module("Angular", function(moduleScope) {
 
         // get controller not in scope of this app
         var $div = $("[ng-controller]").not(".ng-scope");
-
         if ($div.length > 0) {
             // inject the html
-            angular.element($("body")[0]).injector().invoke([
-                '$compile', function($compile) {
+            angular.element($("body")[0]).injector().invoke(['$compile', function($compile) {
                     // get the scope, then compile
                     var scope = angular.element($div).scope();
                     $compile($div)(scope);

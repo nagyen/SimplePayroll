@@ -1,11 +1,5 @@
-﻿App.Angular.getModule()
+﻿﻿App.Angular.getModule()
 .controller("ListingController", ["$scope", "$http", function($scope, $http){
-
-    // init status
-    $scope.status = {
-        register: false,
-        validatationErrors: ""
-    };
 
     // init model
     $scope.model = {};
@@ -51,5 +45,18 @@
         $("#employee-listing").bootgrid("reload")
     })
 
-
+    // add new employee btn click
+    $scope.addNew = function() {
+        // show dialog
+        $http.get("/employee/addEmployeeDialog")
+            .success(function(res){
+                bootbox.dialog({
+                    title: "Add New Employee",
+                    message: res,
+                    size: "large"
+                })
+                // compile injected controller
+                App.Angular.compileNew();
+            });
+    }
 }]);

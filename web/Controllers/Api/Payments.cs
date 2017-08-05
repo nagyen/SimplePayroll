@@ -33,7 +33,7 @@ namespace web.Controllers
                 var payments = await PaymentService.GetAllPaymentsForEmployee(empId);
                 return Ok(payments);
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				return ErrorResponse("Error while getting payements.");
 			}
@@ -53,11 +53,14 @@ namespace web.Controllers
 
                 // record new payment
                 var res = await PaymentService.RecordPayment(payment);
-
-                // return response
-				return Ok(res);
+                if(res.Success)
+                {
+				    return Ok(res);
+                }
+                // return error
+                return ErrorResponse(res.Errors);
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				return ErrorResponse("Error while getting payements.");
 			}

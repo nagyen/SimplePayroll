@@ -24,6 +24,7 @@
     <Folder Include="wwwroot\lib\date-picker\" />
     <Folder Include="wwwroot\lib\bootbox\" />
     <Folder Include="wwwroot\lib\font-awesome\" />
+    <Folder Include="Views\Shared\Partials\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\core\core.csproj" />
