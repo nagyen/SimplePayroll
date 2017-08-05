@@ -18,18 +18,48 @@
 
     // function that makes listing
     var makeListing = function(){
+        var model = $scope.model;
 
-        // get filters
+        // remove current listing
+        //$("#employee-listing").bootgrid("destroy");
+
+        // filters
+        var filters = function (){
+            return {
+                empId: model.empId,
+                state: model.state,
+                payPostingFrom: model.payPostingFrom,
+                payPostingTo: model.payPostingTo
+            }
+        };
 
         // make grid
         $("#employee-listing").bootgrid({
             ajax: true,
-            post: {},
-            url: $(this).data("url"),
+            url: "/listing/getListFiltered",
+            requestHandler: function(req) {
+                req.empId = model.empId;
+                req.state = model.state,
+                req.payPostingFrom = model.payPostingFrom,
+                req.payPostingTo = model.payPostingTo
+                return req;
+            },
             formatters: {},
             rowCount: [25, 50, -1]
-        });
+        }).on("loaded.rs.jquery.bootgrid", function (e) {
+            // move any header appends
+            $("[data-bootgrid-append]")
+            .prependTo(".bootgrid-header .actionBar")
+            .removeAttr("data-bootgrid-append");
+	    });
+
     }
+
+    // watch filter changes
+    $scope.$watchGroup(["model.empId", "model.state", "model.payPostingFrom", "model.payPostingTo"], function(){
+        // reload listing
+        //$("#employee-listing").bootgrid("reload")
+    })
 
 
 }])

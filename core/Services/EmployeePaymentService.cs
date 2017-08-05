@@ -103,7 +103,7 @@ namespace core.Services
             using (var db = new AppDbContext())
             {
                 // check if employee exists
-                return await db.Employees.ToListAsync();
+                return await db.Employees.OrderBy(x => x.FirstName).ThenBy(x => x.LastName).ToListAsync();
             }
         }
 

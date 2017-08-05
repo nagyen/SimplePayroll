@@ -27,7 +27,7 @@ namespace core
 				}
 			}
 
-			public static List<State> los = new List<State> {
+			public static List<State> List = new List<State> {
 	          //us states
 	          new State("AL", "Alabama"),
 			  new State("AK", "Alaska"),
@@ -84,29 +84,29 @@ namespace core
 
 			public static List<string> Abbreviations()
 			{
-				return los.Select(s => s.Abbreviation).ToList();
+				return List.Select(s => s.Abbreviation).ToList();
 			}
 
 			public static List<string> Names()
 			{
-				return los.Select(s => s.Name).ToList();
+				return List.Select(s => s.Name).ToList();
 			}
 
 			public static string GetName(string abbreviation)
 			{
-				return los.Where(s => s.Abbreviation.Equals(abbreviation, StringComparison.CurrentCultureIgnoreCase)).Select(s => s.Name).FirstOrDefault();
+				return List.Where(s => s.Abbreviation.Equals(abbreviation, StringComparison.CurrentCultureIgnoreCase)).Select(s => s.Name).FirstOrDefault();
 			}
 
 			public static string GetAbbreviation(string name)
 			{
-				return los.Where(s => s.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase)).Select(s => s.Abbreviation).FirstOrDefault();
+				return List.Where(s => s.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase)).Select(s => s.Abbreviation).FirstOrDefault();
 			}
 
 			// get random
             static Random random = new Random();
             public static State GetRandomState()
             {
-                return los[random.Next(0, los.Count)];
+                return List[random.Next(0, List.Count)];
             }
 		}
 

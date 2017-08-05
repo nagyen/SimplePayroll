@@ -1,4 +1,5 @@
-﻿@{
+﻿@model core.Models.LisitngModels.ViewModel
+@{
     ViewData["Title"] = "Listing";
     ViewData["LoggedIn"] = true;
 }
@@ -6,8 +7,33 @@
 <h1>Employee Listing</h1>
 
 <div ng-controller="ListingController" ng-init="init()">
-	
-	<table id="employee-listing" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true" data-url="/listing/getListFiltered">
+    <div class="hidden">    
+		<div class="search form-group" data-bootgrid-append="header">
+            <input type="text" class="form-control" placeholder="Pay Date From" data-date-picker ng-model="model.payPostingFrom">
+        </div>
+		<div class="search form-group" data-bootgrid-append="header">
+            <input type="text" class="form-control" placeholder="Pay Date End" data-date-picker ng-model="model.payPostingTo">
+        </div>
+		<div class="search form-group" data-bootgrid-append="header">
+            <select class="form-control" ng-model="model.empId">
+                <option value="">Show All Employees</option>
+                @foreach(var empl in Model.EmplList)
+				{
+                    <option value="@empl.Value">@empl.Text</option>
+				}
+            </select>
+        </div>
+		<div class="search form-group" data-bootgrid-append="header">
+            <select class="form-control" ng-model="model.state">
+                <option value="">Show All States</option>
+                @foreach(var state in Model.StatesList)
+                {
+                    <option value="@state.Value">@state.Text</option>
+                }
+            </select>
+        </div>
+    </div>
+	<table id="employee-listing" class="table table-condensed table-hover table-striped">
 	    <thead>
 	    <tr>
 	        <th data-column-id="fullName" data-type="numeric" data-identifier="true" data-formatter="link">Employee</th>
@@ -18,4 +44,6 @@
 	    </tr>
 	    </thead>
 	</table>
+
+	<pre>{{model | json}}</pre>
 </div>

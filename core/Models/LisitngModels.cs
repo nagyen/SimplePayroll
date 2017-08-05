@@ -46,5 +46,12 @@ namespace core.Models
             public string LastPaymentAmount { get; set; }
             public string YtdPay { get; set; }
         }
+
+        // listing page view model
+        public class ViewModel
+        {
+			public IEnumerable<GenericModels.DropdownListItem> EmplList { get; set; }
+			public IEnumerable<GenericModels.DropdownListItem> StatesList { get; set; }
+        }
     }
 }

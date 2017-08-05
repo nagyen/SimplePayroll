@@ -16,10 +16,12 @@ namespace web
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
+                //.UseUrls("http://*:5000")
                 .UseApplicationInsights()
                 .Build();
 
             host.Run();
+
         }
     }
 }
