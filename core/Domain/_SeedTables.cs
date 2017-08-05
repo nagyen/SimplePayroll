@@ -42,7 +42,7 @@ namespace core.Domain
 
 				// state tax
 				var random = new Random();
-                foreach(var state in ListingHelpers.States.Abbreviations())
+                foreach(var state in SeedingHelpers.StatesGenerator.Abbreviations())
                 {
                     taxPercentage.Id = 0;
                     taxPercentage.TaxCode = state;
@@ -69,20 +69,39 @@ namespace core.Domain
 
         private static void SeedEmployees()
         {
+            var random = new Random();
             using (var db = new AppDbContext())
             {
-                for (var i = 0; i < 100; i++)
+                for (var i = 0; i < 50; i++)
                 {
+                    // create new employee
                     var employee = new Employee
                     {
-                        FirstName = "test",
-                        LastName = $"{i}",
-                        State = "FL"
+                        FirstName = SeedingHelpers.NameGenerator.GenRandomFirstName(),
+                        LastName = SeedingHelpers.NameGenerator.GenRandomLastName(),
+                        State = SeedingHelpers.StatesGenerator.GetRandomState().Abbreviation,
+                        W4Allowances = random.Next(0, 4),
+                        SSN = SeedingHelpers.SSNGenerator.UniqueSSNs[i],
+                        Insurance = (decimal)(random.NextDouble() * 50),
+                        Retirement401kPreTax = random.NextDouble() > 0.5,
+                        Retirement401kPercent = (decimal)(random.NextDouble() * 6),
+                        CreateDateTime = SeedingHelpers.DateGenerator.GetRandomDate(DateTime.Now.AddYears(-5), DateTime.Now)
                     };
+                    // add to table
                     db.Employees.Add(employee);
                 }
+                // commit
                 db.SaveChanges();
             }
         }
+
+   //     private static void SeedPayments()
+   //     {
+   //         using(var db = new AppDbContext())
+   //         {
+			//    var employees = 
+
+			//}
+        //}
     }
 }
