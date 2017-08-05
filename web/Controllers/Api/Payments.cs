@@ -19,7 +19,7 @@ namespace web.Controllers
 
         // GET api/payments/5
         [HttpGet("{empId:long}")]
-        public async Task<IActionResult> Get(int empId)
+        public async Task<IActionResult> Get(int empId, [FromQuery]int page = 1)
         {
 			try
 			{
@@ -30,7 +30,7 @@ namespace web.Controllers
 				}
 
                 // return payements for employee
-                var payments = await PaymentService.GetAllPaymentsForEmployee(empId);
+                var payments = await PaymentService.GetPagedPaymentsForEmployee(empId, page);
                 return Ok(payments);
 			}
 			catch (Exception)

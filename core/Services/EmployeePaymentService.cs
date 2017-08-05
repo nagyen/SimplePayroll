@@ -188,6 +188,18 @@ namespace core.Services
                 return await db.Payments.Where(x => x.EmpId == empId).ToListAsync();
             }
         }
+        
+        // get paged results of employee payments
+        public async Task<IEnumerable<Payment>> GetPagedPaymentsForEmployee(long empId, int page)
+        {
+            if (page < 1) page = 1;
+            var limit = 10;
+            var startFrom = (page - 1)  * limit;
+            using (var db = new AppDbContext())
+            {
+                return await db.Payments.Where(x => x.EmpId == empId).OrderByDescending(x => x.CreateDateTime).Skip(startFrom).Take(limit).ToListAsync();
+            }
+        }
 
         #endregion
     }

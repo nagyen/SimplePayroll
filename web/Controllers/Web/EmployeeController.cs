@@ -71,7 +71,13 @@ namespace web.Controllers.Web
         // add employee partial
         public IActionResult AddEmployeeDialog()
         {
-            return View("~/Views/Shared/Partials/AddEmployee.cshtml");
+            return View("Partials/AddEmployee");
+        }
+        
+        // record employee pay partial
+        public IActionResult RecordPayDialog(long empId)
+        {
+            return View("Partials/RecordPay");
         }
     }
 }

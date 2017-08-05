@@ -25,5 +25,8 @@ namespace core
 
         // get all payments for employee
         Task<IEnumerable<Payment>> GetAllPaymentsForEmployee(long empId);
+	    
+	    // get paged results of employee payments
+	    Task<IEnumerable<Payment>> GetPagedPaymentsForEmployee(long empId, int page);
     }
 }

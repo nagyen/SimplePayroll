@@ -81,28 +81,45 @@
 			<div class="panel panel-primary">
 				<div class="panel-heading">Pay History</div>
 				<div class="panel-body">
-					<div class="btn-group" role="group" aria-label="Basic example">
-						<button type="button" class="btn btn-default" ng-click="refreshTransactions(model.transactionsPage - 1)" ng-disabled="model.transactionsPage == 1"><span class="glyphicon glyphicon-menu-left"></span>Prev</button>
-						<button type="button" class="btn btn-default">{{model.transactionsPage}}</button>
-						<button type="button" class="btn btn-default" ng-click="refreshTransactions(model.transactionsPage +  1)" ng-disabled="model.transactions.length < 10">Next<span class="glyphicon glyphicon-menu-right"></span></button>
+					<div class="row">
+						<div class="col-sm-6 text-left">
+							<a href="javascript:;;" class="btn btn-primary" ng-click="recordPay()">Record Pay</a>
+						</div>
+						<div class="col-sm-6 text-right">
+							<div class="btn-group" role="group" aria-label="Basic example">
+								<button type="button" class="btn btn-default" ng-click="refreshPayements(model.currentPage - 1)" ng-disabled="model.currentPage == 1"><span class="glyphicon glyphicon-menu-left"></span>Prev</button>
+								<button type="button" class="btn btn-default">{{model.currentPage}}</button>
+								<button type="button" class="btn btn-default" ng-click="refreshPayements(model.currentPage +  1)" ng-disabled="model.payments.length < 10">Next<span class="glyphicon glyphicon-menu-right"></span></button>
+							</div>
+						</div>
 					</div>
+
 					<table class="table table-stripped">
 						<thead>
 						<tr>
-							<th>Date</th>
-							<th class="text-center">Type</th>
-							<th class="text-center">Amount</th>
-							<th class="text-center">Previous Balance</th>
-							<th class="text-center">New Balance</th>
+							<th class="text-center">Pay Date</th>
+							<th class="text-center">Payment Period</th>
+							<th class="text-center">Gross Pay</th>
+							<th class="text-center">Fed Tax</th>
+							<th class="text-center">State Tax</th>
+							<th class="text-center">Social Security Tax</th>
+							<th class="text-center">Medicare Tax</th>
+							<th class="text-center">Insurance</th>
+							<th class="text-center">401K</th>
+							<th class="text-center">Net Pay</th>
 						</tr>
 						</thead>
 						<tbody>
-						<tr ng-repeat="trans in model.transactions">
-							<td>{{trans.date}}</td>
-							<td class="text-center">{{trans.type}}</td>
-							<td class="text-center">{{trans.amount | currency}}</td>
-							<td class="text-center">{{trans.prevBalance | currency}}</td>
-							<td class="text-center">{{trans.currentBalance | currency}}</td>
+						<tr ng-repeat="pay in model.payments">
+							<td class="text-center">{{pay.createDateTime}}</td>
+							<td class="text-center">{{pay.PaymentPeriodFrom}} to {{pay.PaymentPeriodTo}}</td>
+							<td class="text-center">{{pay.FedTax | currency}}</td>
+							<td class="text-center">{{pay.StateTax | currency}}</td>
+							<td class="text-center">{{pay.SocialSecurityTax | currency}}</td>
+							<td class="text-center">{{pay.MedicareTax | currency}}</td>
+							<td class="text-center">{{pay.Insurance | currency}}</td>
+							<td class="text-center">{{pay.Reitirement401K | currency}}</td>
+							<td class="text-center">{{pay.NetPay | currency}}</td>
 						</tr>
 						</tbody>
 					</table>
