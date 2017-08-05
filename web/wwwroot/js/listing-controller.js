@@ -1,4 +1,4 @@
-﻿﻿App.Angular.getModule()
+﻿App.Angular.getModule()
 .controller("ListingController", ["$scope", "$http", function($scope, $http){
 
     // init model
@@ -26,7 +26,7 @@
         // make grid
         $("#employee-listing").bootgrid({
             ajax: true,
-            url: "/listing/getListFiltered",
+            url: "/employee/getListFiltered",
             requestHandler: filters,
             formatters: {},
             rowCount: [10, 25, -1]

@@ -18,7 +18,8 @@
           if(res.code != undefined && res.code != 0){
               bootbox.alert(res.text);
           }else {
-            console.log(res);
+            // show payments screen on create
+            window.location = "/employee/" + res.empId + "/payments";
           }
       })
     }else {

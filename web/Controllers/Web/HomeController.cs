@@ -20,7 +20,7 @@ namespace web.Controllers
             // go to employee listing screen if logged in already
             if (await CheckAccess())
             {
-                return Redirect("/listing");
+                return Redirect("/employee/listing");
             }
 
             // else show login page

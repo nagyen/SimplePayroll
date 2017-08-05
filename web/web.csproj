@@ -19,7 +19,6 @@
   <ItemGroup>
     <Folder Include="Controllers\Api\" />
     <Folder Include="wwwroot\lib\angular\" />
-    <Folder Include="Views\Listing\" />
     <Folder Include="wwwroot\lib\bootgrid\" />
     <Folder Include="wwwroot\lib\date-picker\" />
     <Folder Include="wwwroot\lib\bootbox\" />

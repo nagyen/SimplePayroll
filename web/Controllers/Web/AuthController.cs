@@ -25,7 +25,7 @@ namespace web.Controllers
                 SetAuth(res.UserId, res.AuthKey);
 
                 // return to listing screen on login
-                return SuccessResponse("/listing");
+                return SuccessResponse("/employee/listing");
             }
 
             // return error
