@@ -114,7 +114,7 @@ namespace web.Controllers
 				    netPay = finalpay
 			    });
 		    }
-		    catch (Exception e)
+		    catch (Exception)
 		    {
 			    return ErrorResponse("Error while trying to calculate deductions.");
 		    }
