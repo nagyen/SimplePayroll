@@ -1,5 +1,5 @@
 ﻿App.Angular.getModule()
-.controller("ListingController", ["$scope", "$http", function($scope, $http){
+.controller("ListingController", ["$scope", "$http", "$filter", function($scope, $http, $filter){
 
     // init model
     $scope.model = {};
@@ -27,7 +27,13 @@
         var formatters = {
             "link": function (col, row) {
                 var url = "/employee/" + row.empId + "/payments";
-                return "<a href='"+ url +"'>" + row.fullName + "</a>"
+                return "<a href='"+ url +"'>" + row.fullName + "</a>";
+            },
+            "lpamount": function (col, row) {
+                return $filter("currency")(row.lastPaymentAmount);
+            },
+            "ytdpay": function (col, row) {
+                return $filter("currency")(row.ytdPay);
             }
         };
 
@@ -50,8 +56,8 @@
     // watch filter changes
     $scope.$watchGroup(["model.empId", "model.state", "model.payPostingFrom", "model.payPostingTo"], function(){
         // reload listing
-        $("#employee-listing").bootgrid("reload")
-    })
+        $("#employee-listing").bootgrid("reload");
+    });
 
     // add new employee btn click
     $scope.addNew = function() {
@@ -62,7 +68,7 @@
                     title: "Add New Employee",
                     message: res,
                     size: "large"
-                })
+                });
                 // compile injected controller
                 App.Angular.compileNew();
             });

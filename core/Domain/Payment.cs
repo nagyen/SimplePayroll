@@ -11,6 +11,7 @@ namespace core.Domain
     {
         [Key]
         public long Id { get; set; }
+        [ForeignKey("Employee")]
         public long EmpId { get; set; }
         public decimal GrossPay { get; set; }
         public DateTime PaymentPeriodFrom { get; set; }
@@ -22,7 +23,9 @@ namespace core.Domain
         public decimal Insurance { get; set; }
         public decimal Retirement401K { get; set; }
         public decimal NetPay { get; set; }
-        
         public DateTime CreateDateTime { get; set; }
+        
+        // link to employee
+        public virtual Employee Employee { get; set; }
     }
 }

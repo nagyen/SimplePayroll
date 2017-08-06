@@ -11,11 +11,17 @@
 	<a href="javascript:;;" class="btn btn-primary" ng-click="addNew()">Add New Employee</a>
     <div class="hidden">    
 		<div class="search form-group" data-bootgrid-append="header">
-            <input type="text" class="form-control" placeholder="Pay Date From" data-date-picker="" data-listing-filter="payPostingFrom" ng-model="model.payPostingFrom">
-        </div>
-		<div class="search form-group" data-bootgrid-append="header">
-            <input type="text" class="form-control" placeholder="Pay Date End" data-date-picker="" data-listing-filter="payPostingTo" ng-model="model.payPostingTo">
-        </div>
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Pay Date From" data-date-picker="" data-listing-filter="payPostingFrom" ng-model="model.payPostingFrom">
+				<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+			</div>
+		</div>
+	    <div class="search form-group" data-bootgrid-append="header">
+		    <div class="input-group">
+			    <input type="text" class="form-control" placeholder="Pay Date End" data-date-picker="" data-listing-filter="payPostingTo" ng-model="model.payPostingTo">
+			    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		    </div>
+	    </div>
 		<div class="search form-group" data-bootgrid-append="header">
             <select class="form-control" data-listing-filter="empId" ng-model="model.empId">
                 <option value="">Show All Employees</option>
@@ -41,8 +47,8 @@
 	        <th data-column-id="fullName" data-formatter="link">Employee</th>
 	        <th data-column-id="state">State</th>
 	        <th data-column-id="lastPaymentDate">Last Payment Date</th>
-	        <th data-column-id="lastPaymentAmount">Last Payment Amount</th>
-	        <th data-column-id="ytdPay">YTD Pay</th>
+	        <th data-column-id="lastPaymentAmount" data-formatter="lpamount">Last Payment Amount</th>
+	        <th data-column-id="ytdPay" data-formatter="ytdpay">YTD Pay</th>
 	    </tr>
 	    </thead>
 	</table>

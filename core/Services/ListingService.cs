@@ -40,7 +40,7 @@ namespace core.Services
             // pay posting date end
             if (request.PayPostingTo.HasValue)
             {
-                filters.Add(x => x.Payments.Any(y => y.CreateDateTime <= request.PayPostingTo));
+                filters.Add(x => x.Payments.Any(y => y.CreateDateTime < request.PayPostingTo.Value.AddDays(1)));
             }
             
             // get the filtered list
@@ -48,7 +48,7 @@ namespace core.Services
             using (var db = new AppDbContext())
             {
                 // get all employees with their payments
-                var employees = db.Employees.OrderByDescending(x => x.CreateDateTime).Include(x => x.Payments).AsQueryable();
+                var employees = db.Employees.Include(x => x.Payments).OrderByDescending(x => x.Id).AsQueryable();
 
                 // apply filters
                 if (filters.Any())
@@ -107,15 +107,15 @@ namespace core.Services
         public static LisitngModels.ListingItem TransformListingItem(Employee employee)
         {
             var lastPayment = employee.Payments.OrderByDescending(x => x.CreateDateTime).FirstOrDefault();
-            var ytdPay = employee.Payments.Where(x => x.CreateDateTime > new DateTime(DateTime.Now.Year, 1, 1)).Sum(x => x.GrossPay);
+            var ytdPay = employee.Payments.Where(x => x.CreateDateTime >= new DateTime(DateTime.Now.Year, 1, 1)).Sum(x => x.GrossPay);
             return new LisitngModels.ListingItem
             {
                 EmpId = employee.Id,
                 FullName = $"{employee.FirstName} {employee.LastName}",
                 State = employee.State,
                 LastPaymentDate = lastPayment?.CreateDateTime.ToString("d") ?? "",
-                LastPaymentAmount = lastPayment?.GrossPay.ToString("C") ?? "",
-                YtdPay = ytdPay.ToString("C")
+                LastPaymentAmount = lastPayment?.GrossPay.ToString() ?? "",
+                YtdPay = ytdPay.ToString()
             };
         }
 
