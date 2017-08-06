@@ -1,3 +1,4 @@
+// force a field to accept ssn format number
 App.Angular.getModule()
 .directive('ssn', function () {
     function makeSsn (value) {

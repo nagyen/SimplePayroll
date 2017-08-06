@@ -13,8 +13,8 @@ namespace core.Domain
         public long Id { get; set; }
         public long EmpId { get; set; }
         public decimal GrossPay { get; set; }
-        public decimal PaymentPeriodFrom { get; set; }
-        public decimal PaymentPeriodTo { get; set; }
+        public DateTime PaymentPeriodFrom { get; set; }
+        public DateTime PaymentPeriodTo { get; set; }
         public decimal FedTax { get; set; }
         public decimal StateTax { get; set; }
         public decimal SocialSecurityTax { get; set; }

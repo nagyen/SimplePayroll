@@ -20,23 +20,36 @@ namespace core.Services
         }
 
         // function to calculate taxable income for emplaoyee
-        public decimal CalculateTaxableIncome(Employee employee, decimal pay)
+        public decimal CalculateTaxableIncome(Employee employee, decimal grossPay)
         {
 			// reduce Insurance
-			var taxableIncome = pay - employee.Insurance;
+			var taxableIncome = grossPay - employee.Insurance;
 
             // reduce 401k Pre tax
-			if (employee.Retirement401kPreTax)
+			if (employee.Retirement401KPreTax)
 			{
-				taxableIncome = taxableIncome - (pay * employee.Retirement401kPercent);
+				taxableIncome = taxableIncome - Calculate401KAmount(employee, grossPay);
 			}
 
 			// reduce w4 withholding allowances
-			taxableIncome = taxableIncome - (decimal)(employee.W4Allowances * 168.8);
+			taxableIncome = taxableIncome - CalculateW4AllowanceAmount(employee);
 
-            // return 
-            return taxableIncome;
+	        // return 0 if negative
+	        return taxableIncome < 0 ? 0 : taxableIncome;
+
         }
+		
+	    // function to calculate w4 allowances amount
+	    public decimal CalculateW4AllowanceAmount(Employee employee)
+	    {
+		    return Math.Round((decimal) (employee.W4Allowances * 168.8), 2);
+	    }
+	    
+	    // function to calculate 401k savings amount
+	    public decimal Calculate401KAmount(Employee employee, decimal grossPay)
+	    {
+		    return Math.Round(grossPay * employee.Retirement401KPercent * (decimal) 0.01, 2);
+	    }
 
         // function to calculate Fed tax amount
         public decimal CalculateFedTaxAmount(decimal taxableIncome)
@@ -50,37 +63,24 @@ namespace core.Services
 			// if taxable income > 500 && < 5000 = 3% tax
 			if (taxableIncome > 500 && taxableIncome < 5000)
 			{
-				return taxableIncome * (decimal)0.3;
+				return Math.Round(taxableIncome * (decimal)0.03, 2);
 			}
 
 			// if taxable income >= 5000 && < 10,000 = 7% tax
 			if (taxableIncome >= 5000 && taxableIncome < 10000)
 			{
-				return taxableIncome * (decimal)0.7;
+				return Math.Round(taxableIncome * (decimal)0.07, 2);
 			}
 
 			// everything else deduct standard fed tax percent
 			using (var db = new AppDbContext())
 			{
 				var standardFedTax = db.TaxPercentages.First(x => x.TaxCode == "FED").Percent;
-				return taxableIncome * standardFedTax;
+				return Math.Round(taxableIncome * standardFedTax * (decimal)0.01, 2);
 			}
         }
 
-        // function to calculate income after deducting fed tax
-        public decimal CalculateIncomeAfterFedTax(Employee employee, decimal pay)
-        {
-            // calculate taxable income
-            var taxableIncome = CalculateTaxableIncome(employee, pay);
-
-            // calculate fedtax amount for taxable income
-            var fedTaxAmount = CalculateFedTaxAmount(taxableIncome);
-
-            // deduct tax amount from pay
-            return pay - fedTaxAmount;
-        }
-
-		// function to calculate State tax amount
+        // function to calculate State tax amount
 		public decimal CalculateStateTaxAmount(decimal taxableIncome, string stateCode)
 		{
 			// if taxable income < 500 no tax
@@ -92,35 +92,22 @@ namespace core.Services
 			// if taxable income > 500 && < 5000 = 1% tax
 			if (taxableIncome > 500 && taxableIncome < 5000)
 			{
-				return taxableIncome * (decimal)1.0;
+				return Math.Round(taxableIncome * (decimal)0.01, 2);
 			}
 
 			// if taxable income >= 5000 && < 10,000 = 1.5% tax
 			if (taxableIncome >= 5000 && taxableIncome < 10000)
 			{
-				return taxableIncome * (decimal)1.5;
+				return Math.Round(taxableIncome * (decimal)0.015, 2);
 			}
 
 			// everything else deduct standard state tax percent
 			using (var db = new AppDbContext())
 			{
-                var standardFedTax = db.TaxPercentages.First(x => x.TaxCode == stateCode).Percent;
-				return taxableIncome * standardFedTax;
+                var standardStateTax = db.TaxPercentages.First(x => x.TaxCode == stateCode).Percent;
+				return Math.Round(taxableIncome * standardStateTax * (decimal)0.01, 2);
 			}
 		}
-
-		// function to calculate income after deducting state tax
-		public decimal CalculateIncomeAfterStateTax(Employee employee, decimal pay)
-		{
-			// calculate taxable income
-			var taxableIncome = CalculateTaxableIncome(employee, pay);
-
-			// calculate employee's state tax amount for taxable income
-            var stateTaxAmount = CalculateStateTaxAmount(taxableIncome, employee.State);
-
-			// deduct tax amount from pay
-			return pay - stateTaxAmount;
-        }
 
 		// function to calculate Social security tax amount
 		public decimal CalculateSocialTaxAmount(decimal grossPay)
@@ -129,18 +116,8 @@ namespace core.Services
 			using (var db = new AppDbContext())
 			{
 				var standardSocialTax = db.TaxPercentages.First(x => x.TaxCode == "SOCIAL").Percent;
-                return grossPay * standardSocialTax;
+                return Math.Round(grossPay * standardSocialTax * (decimal)0.01, 2);
 			}
-		}
-
-		// function to calculate income after deducting social security tax
-		public decimal CalculateIncomeAfterSocialTax(decimal pay)
-		{
-			// calculate social tax amount for total income
-			var socialTaxAmount = CalculateSocialTaxAmount(pay);
-
-			// deduct tax amount from pay
-			return pay - socialTaxAmount;
 		}
 
 		// function to calculate Medicare security tax amount
@@ -150,32 +127,19 @@ namespace core.Services
 			using (var db = new AppDbContext())
 			{
 				var standardMedicareTax = db.TaxPercentages.First(x => x.TaxCode == "MEDICARE").Percent;
-				return grossPay * standardMedicareTax;
+				return Math.Round(grossPay * standardMedicareTax * (decimal)0.01, 2);
 			}
 		}
 
-		// function to calculate income after deducting social security tax
-		public decimal CalculateIncomeAfterMedicareTax(decimal pay)
-		{
-			// calculate social tax amount for total income
-			var medicareTaxAmount = CalculateMedicareTaxAmount(pay);
 
-			// deduct tax amount from pay
-			return pay - medicareTaxAmount;
-		}
-
-        // calculate final pay after all taxes
-        public decimal CalculateFinalPayAfterDeductions(Employee employee, decimal grosspay)
+        // calculate net pay after all deductions
+        public decimal CalculateNetPay(Employee employee, decimal grosspay)
         {
 			// calculate taxable income
 			var taxableIncome = CalculateTaxableIncome(employee, grosspay);
 
-			// calculate 401k pretax
-			decimal retirement = 0;
-			if (employee.Retirement401kPreTax)
-			{
-                retirement = grosspay * employee.Retirement401kPercent;
-			}
+			// calculate 401k amount
+			var retirement = Calculate401KAmount(employee, grosspay);
 
             // calculate all taxes
             var fedTax = CalculateFedTaxAmount(taxableIncome);
@@ -183,10 +147,10 @@ namespace core.Services
             var socialTax = CalculateSocialTaxAmount(grosspay);
             var medicareTax = CalculateMedicareTaxAmount(grosspay);
 
-            // deductions
+            // reduce all deductions
             var finalpay = grosspay - (fedTax + stateTax + socialTax + medicareTax + employee.Insurance + retirement);
 
-            return finalpay;
+            return Math.Round(finalpay, 2);
         }
     }
 }

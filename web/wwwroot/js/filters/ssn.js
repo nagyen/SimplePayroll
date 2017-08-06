@@ -1,3 +1,4 @@
+// format a string to ssn format with mask
 App.Angular.getModule()
 .filter("ssnFormat", function () {
     return function (value, mask) {

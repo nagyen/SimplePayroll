@@ -64,13 +64,13 @@
 					<div class="row">
 						<div class="col-sm-4">
 							<div class="form-group">
-								<label for="Retirement401kPercent">401k %</label>
-								<input type="number" class="form-control" id="Retirement401kPercent" ng-model="model.employee.retirement401kPercent" min="0" required>
+								<label for="Retirement401KPercent">401k %</label>
+								<input type="number" class="form-control" id="Retirement401KPercent" ng-model="model.employee.retirement401KPercent" min="0" required>
 							</div>
 						</div>
 						<div class="col-sm-4">
 							<div class="checkbox">
-								<label><input type="checkbox" id="Retirement401kPreTax" ng-model="model.employee.retirement401kPreTax">401k Pre Tax</label>
+								<label><input type="checkbox" id="Retirement401kPreTax" ng-model="model.employee.retirement401KPreTax">401k Pre Tax</label>
 							</div>
 						</div>
 					</div>
@@ -102,8 +102,8 @@
 							<th class="text-center">Gross Pay</th>
 							<th class="text-center">Fed Tax</th>
 							<th class="text-center">State Tax</th>
-							<th class="text-center">Social Security Tax</th>
-							<th class="text-center">Medicare Tax</th>
+							<th class="text-center">SSN Tax</th>
+							<th class="text-center">Medicare</th>
 							<th class="text-center">Insurance</th>
 							<th class="text-center">401K</th>
 							<th class="text-center">Net Pay</th>
@@ -111,15 +111,16 @@
 						</thead>
 						<tbody>
 						<tr ng-repeat="pay in model.payments">
-							<td class="text-center">{{pay.createDateTime}}</td>
-							<td class="text-center">{{pay.PaymentPeriodFrom}} to {{pay.PaymentPeriodTo}}</td>
-							<td class="text-center">{{pay.FedTax | currency}}</td>
-							<td class="text-center">{{pay.StateTax | currency}}</td>
-							<td class="text-center">{{pay.SocialSecurityTax | currency}}</td>
-							<td class="text-center">{{pay.MedicareTax | currency}}</td>
-							<td class="text-center">{{pay.Insurance | currency}}</td>
-							<td class="text-center">{{pay.Reitirement401K | currency}}</td>
-							<td class="text-center">{{pay.NetPay | currency}}</td>
+							<td class="text-center">{{pay.createDateTime | date:"MM/dd/yyyy"}}</td>
+							<td class="text-center">{{pay.paymentPeriodFrom | date:"MM/dd/yyyy"}} to {{pay.paymentPeriodTo | date:"MM/dd/yyyy"}}</td>
+							<td class="text-center">{{pay.grossPay | currency}}</td>
+							<td class="text-center">{{pay.fedTax | currency}}</td>
+							<td class="text-center">{{pay.stateTax | currency}}</td>
+							<td class="text-center">{{pay.socialSecurityTax | currency}}</td>
+							<td class="text-center">{{pay.medicareTax | currency}}</td>
+							<td class="text-center">{{pay.insurance | currency}}</td>
+							<td class="text-center">{{pay.retirement401K | currency}}</td>
+							<td class="text-center">{{pay.netPay | currency}}</td>
 						</tr>
 						</tbody>
 					</table>

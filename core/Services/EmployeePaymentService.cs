@@ -71,8 +71,8 @@ namespace core.Services
 
                     // if here update employee
                     prevEmpl.Insurance = employee.Insurance;
-                    prevEmpl.Retirement401kPercent = employee.Retirement401kPercent;
-                    prevEmpl.Retirement401kPreTax = employee.Retirement401kPreTax;
+                    prevEmpl.Retirement401KPercent = employee.Retirement401KPercent;
+                    prevEmpl.Retirement401KPreTax = employee.Retirement401KPreTax;
                     prevEmpl.State = employee.State;
                     db.Employees.Update(prevEmpl);
                     await db.SaveChangesAsync();
@@ -146,11 +146,8 @@ namespace core.Services
 				};
             }
 
-            // final pay after deductions
-            var netpay = new TaxCalculationService().CalculateFinalPayAfterDeductions(empl, payment.GrossPay);
-
             // check if valid pay
-            if(netpay < 0)
+            if(payment.NetPay < 0)
             {
                 // return error
 				return new EmpPayModels.PaymentFeedback
@@ -161,8 +158,7 @@ namespace core.Services
             }
 
             // if here valid pay
-            // set payment fields
-            payment.NetPay = Math.Round(netpay, 2);
+            // set payment date
             payment.CreateDateTime = DateTime.Now;
 
             // save

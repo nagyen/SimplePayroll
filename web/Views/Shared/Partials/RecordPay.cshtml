@@ -5,12 +5,12 @@
 }
 <div ng-controller="RecordPayController">
     <form name="frm">
-        <div class="hidden" ng-model="model.empId" ng-init="model.empId=@empId"></div>
+        <div class="hidden" ng-bind="model.empId" ng-init="model.empId=@empId"></div>
         <div class="row">
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="GrossPay">Salary</label>
-                    <input type="number" class="form-control" id="GrossPay" ng-model="model.grossPay" min="0" required>
+                    <input type="number" class="form-control" id="GrossPay" ng-model="model.grossPay" ng-change="getAllDeductions()" min="0" required>
                 </div>
             </div>
             <div class="col-sm-4">
@@ -32,49 +32,68 @@
                 </div>
             </div>
         </div>
+        
         <div class="row">
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="Insurance">Insurance</label>
-                    <input type="number" class="form-control" id="Insurance" ng-model="model.insurance" min="0" required>
+                    <div class="field-readonly" id="Insurance">{{model.insurance | currency}}</div>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
-                    <label for="FedTax">Fed Tax</label>
-                    <div class="field-readonly" id="FedTax" ng-bind="model.fedTax"></div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="StateTax">StateTax</label>
-                    <div class="field-readonly" id="StateTax" ng-bind="model.stateTax"></div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="SocialSecurityTax">Social Security Tax</label>
-                    <div class="field-readonly" id="SocialSecurityTax" ng-bind="model.socialSecurityTax"></div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="MedicareTax">Medicare Tax</label>
-                    <div class="field-readonly" id="MedicareTax" ng-bind="model.medicareTax"></div>
+                    <label for="W4Alloances">W4 Allowances</label>
+                    <div class="field-readonly" id="W4Alloances">{{model.w4Allowances | currency}}</div>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="Retirement401K">401K</label>
-                    <div class="field-readonly" id="Retirement401K" ng-model="model.retirement401K"></div>
+                    <div class="field-readonly" id="Retirement401K">{{model.retirement401K | currency}}</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="TaxableIncome">Taxable Income</label>
+                    <div class="field-readonly" id="TaxableIncome">{{model.taxableIncome | currency}}</div>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
+                    <label for="FedTax">Fed Tax</label>
+                    <div class="field-readonly" id="FedTax">{{model.fedTax | currency}}</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="StateTax">StateTax</label>
+                    <div class="field-readonly" id="StateTax">{{model.stateTax | currency}}</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="SocialSecurityTax">Social Security Tax</label>
+                    <div class="field-readonly" id="SocialSecurityTax">{{model.socialSecurityTax | currency}}</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="MedicareTax">Medicare Tax</label>
+                    <div class="field-readonly" id="MedicareTax">{{model.medicareTax | currency}}</div>
+                </div>
+            </div>
+            
+            <div class="col-sm-4">
+                <div class="form-group">
                     <label for="NetPay">Net Pay</label>
-                    <div class="field-readonly" id="NetPay" ng-model="model.netPay"></div>
+                    <div class="field-readonly" id="NetPay">{{model.netPay | currency}}</div>
                 </div>
             </div>
         </div>
@@ -86,5 +105,4 @@
             </div>
         </div>
     </form>
-    <pre>{{model | json}}</pre>
 </div>

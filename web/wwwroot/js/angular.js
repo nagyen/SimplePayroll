@@ -1,4 +1,4 @@
-﻿﻿// build angular module
+﻿// build angular module
 App.module("Angular", function(moduleScope) {
 
     // ng-app
@@ -33,7 +33,7 @@ App.module("Angular", function(moduleScope) {
     // funciton to bootstrap angular app
     var bootstrapAngular = function() {
         angular.module(ngApp, []);
-    }
+    };
 
     // init
     moduleScope.init = function() {
