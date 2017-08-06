@@ -25,6 +25,9 @@ App.Angular.getModule()
 
                     // get payments
                     $scope.refreshPayements(1);
+                    
+                    // get ytd pay
+                    $scope.refresthYtdPay();
                 }
             });
         
@@ -53,6 +56,17 @@ App.Angular.getModule()
             });
         
     };
+    
+    // refresh ytd pay
+    $scope.refresthYtdPay = function () {
+        var empId = $scope.model.employee.id;
+        //  get the payments paged
+        $http.get("/api/payments/getYtdPay/"+empId)
+            .success(function(res){
+                $scope.model.ytdGross = res.ytdGross;
+                $scope.model.ytdNet = res.ytdNet;
+            });
+    };
 
     // record a transaction
     $scope.recordPay = function(){
@@ -77,6 +91,7 @@ App.Angular.getModule()
     // check for pay-added event and update listing
     $scope.$on("pay-added", function () {
         $scope.refreshPayements(1);
+        $scope.refresthYtdPay();
     })
     
 }]);

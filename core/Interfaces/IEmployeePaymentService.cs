@@ -28,5 +28,8 @@ namespace core
 	    
 	    // get paged results of employee payments
 	    Task<IEnumerable<Payment>> GetPagedPaymentsForEmployee(long empId, int page);
+	    
+	    // get ytd gross and net pay
+	    Task<Tuple<decimal, decimal>> GetYtdPay(long empId);
     }
 }

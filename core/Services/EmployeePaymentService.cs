@@ -196,6 +196,18 @@ namespace core.Services
                 return await db.Payments.Where(x => x.EmpId == empId).OrderByDescending(x => x.CreateDateTime).Skip(startFrom).Take(limit).ToListAsync();
             }
         }
+        
+        // get ytd gross & net pay for employee
+        public async Task<Tuple<decimal, decimal>> GetYtdPay(long empId)
+        {
+            var payments = await GetAllPaymentsForEmployee(empId);
+            var yearPay = payments.Where(x => x.CreateDateTime >= new DateTime(DateTime.Now.Year, 1, 1)).ToList();
+            var ytdGross = yearPay.Sum(x => x.GrossPay);
+            var ytdNet = yearPay.Sum(x => x.NetPay);
+            
+            // return ytd pay
+            return new Tuple<decimal, decimal>(ytdGross, ytdNet);
+        }
 
         #endregion
     }

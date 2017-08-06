@@ -84,6 +84,8 @@
 					<div class="row">
 						<div class="col-sm-6 text-left">
 							<a href="javascript:;;" class="btn btn-primary" ng-click="recordPay()">Record Pay</a>
+							YTD Gross: <span class="label label-primary">{{model.ytdGross | currency}}</span>
+							YTD Net: <span class="label label-primary">{{model.ytdNet | currency}}</span>
 						</div>
 						<div class="col-sm-6 text-right">
 							<div class="btn-group" role="group" aria-label="Basic example">

@@ -119,5 +119,17 @@ namespace web.Controllers
 			    return ErrorResponse("Error while trying to calculate deductions.");
 		    }
 	    }
+	    
+	    // get ytd pay
+	    [HttpGet("/api/[controller]/[action]/{empId:long}")]
+	    public async Task<IActionResult> GetYtdPay(long empId)
+	    {
+		    var pay = await PaymentService.GetYtdPay(empId);
+		    return Ok(new
+		    {
+			    ytdGross = pay.Item1,
+			    ytdNet = pay.Item2
+		    });
+	    }
     }
 }
