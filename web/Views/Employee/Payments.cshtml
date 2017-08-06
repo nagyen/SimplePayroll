@@ -11,72 +11,77 @@
 	<h2>Employee: {{model.employee.firstName}} {{model.employee.lastName}}</h2>
 	<div class="row">
 		<div class="col-sm-12">
-			<div class="panel panel-primary">
-				<div class="panel-heading">Employee Details</div>
-				<div class="panel-body">
-					<div class="row">
-						<div class="col-sm-4">
-							<div class="form-group">
-								<label for="FirstName">First Name</label>
-								<input type="text" class="form-control" id="FirstName" ng-model="model.employee.firstName" min="0" required>
-							</div>                     
-						</div>
-						<div class="col-sm-4">
-							<div class="form-group">
-								<label for="LastName">Last Name</label>
-								<input type="text" class="form-control" id="LastName" ng-model="model.employee.lastName" min="0" required>
-							</div>                     
-						</div>
-						<div class="col-sm-4">
-							<div class="form-group">
-								<label>State</label>
-								<select class="form-control" ng-model="model.employee.state">
-									@foreach (var state in statesList)
-									{
-										<option value="@state.Value">@state.Text</option>
-									}
-								</select>
-							</div>   
-						</div>
+			<form name="frm">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Employee Details
+						<a href="javascript:;;" class="btn btn-xs btn-success" ng-if="frm.$dirty" ng-click="saveEmp()">Save Changes</a>
+						<span style="color: #ff0400">{{status.validationErrors}}</span>
 					</div>
-					
-					<div class="row">
-						<div class="col-sm-4">
-							<div class="form-group">
-								<label>SSN</label>
-								<div class="field-readonly">{{model.employee.ssn | ssnFormat:true}}</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label for="FirstName">First Name</label>
+									<input type="text" class="form-control" id="FirstName" ng-model="model.employee.firstName" min="0" required>
+								</div>                     
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label for="LastName">Last Name</label>
+									<input type="text" class="form-control" id="LastName" ng-model="model.employee.lastName" min="0" required>
+								</div>                     
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label>State</label>
+									<select class="form-control" ng-model="model.employee.state" required>
+										@foreach (var state in statesList)
+										{
+											<option value="@state.Value">@state.Text</option>
+										}
+									</select>
+								</div>   
 							</div>
 						</div>
-						<div class="col-sm-4">
-							<div class="form-group">
-								<label for="Insurance">Insurance</label>
-								<input type="number" class="form-control" id="Insurance" ng-model="model.employee.insurance" min="0" required>
+						
+						<div class="row">
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label>SSN</label>
+									<div class="field-readonly">{{model.employee.ssn | ssnFormat:true}}</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label for="Insurance">Insurance</label>
+									<input type="number" class="form-control" id="Insurance" ng-model="model.employee.insurance" min="0" required>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label for="W4Allowances">W4 Allowances</label>
+									<input type="number" class="form-control" id="W4Allowances" ng-model="model.employee.w4Allowances" min="0" required>
+								</div>
 							</div>
 						</div>
-						<div class="col-sm-4">
-							<div class="form-group">
-								<label for="W4Allowances">W4 Allowances</label>
-								<input type="number" class="form-control" id="W4Allowances" ng-model="model.employee.w4Allowances" min="0" required>
+						
+						<div class="row">
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label for="Retirement401KPercent">401k %</label>
+									<input type="number" class="form-control" id="Retirement401KPercent" ng-model="model.employee.retirement401KPercent" min="0" required>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="checkbox">
+									<label><input type="checkbox" id="Retirement401kPreTax" ng-model="model.employee.retirement401KPreTax">401k Pre Tax</label>
+								</div>
 							</div>
 						</div>
+						
 					</div>
-					
-					<div class="row">
-						<div class="col-sm-4">
-							<div class="form-group">
-								<label for="Retirement401KPercent">401k %</label>
-								<input type="number" class="form-control" id="Retirement401KPercent" ng-model="model.employee.retirement401KPercent" min="0" required>
-							</div>
-						</div>
-						<div class="col-sm-4">
-							<div class="checkbox">
-								<label><input type="checkbox" id="Retirement401kPreTax" ng-model="model.employee.retirement401KPreTax">401k Pre Tax</label>
-							</div>
-						</div>
-					</div>
-					
 				</div>
-			</div>
+			</form>
 
 			<div class="panel panel-primary">
 				<div class="panel-heading">Pay History</div>
@@ -95,37 +100,38 @@
 							</div>
 						</div>
 					</div>
-
-					<table class="table table-stripped">
-						<thead>
-						<tr>
-							<th class="text-center">Pay Date</th>
-							<th class="text-center">Payment Period</th>
-							<th class="text-center">Gross Pay</th>
-							<th class="text-center">Fed Tax</th>
-							<th class="text-center">State Tax</th>
-							<th class="text-center">SSN Tax</th>
-							<th class="text-center">Medicare</th>
-							<th class="text-center">Insurance</th>
-							<th class="text-center">401K</th>
-							<th class="text-center">Net Pay</th>
-						</tr>
-						</thead>
-						<tbody>
-						<tr ng-repeat="pay in model.payments">
-							<td class="text-center">{{pay.createDateTime | date:"MM/dd/yyyy"}}</td>
-							<td class="text-center">{{pay.paymentPeriodFrom | date:"MM/dd/yyyy"}} to {{pay.paymentPeriodTo | date:"MM/dd/yyyy"}}</td>
-							<td class="text-center">{{pay.grossPay | currency}}</td>
-							<td class="text-center">{{pay.fedTax | currency}}</td>
-							<td class="text-center">{{pay.stateTax | currency}}</td>
-							<td class="text-center">{{pay.socialSecurityTax | currency}}</td>
-							<td class="text-center">{{pay.medicareTax | currency}}</td>
-							<td class="text-center">{{pay.insurance | currency}}</td>
-							<td class="text-center">{{pay.retirement401K | currency}}</td>
-							<td class="text-center">{{pay.netPay | currency}}</td>
-						</tr>
-						</tbody>
-					</table>
+					<div class="table-responsive">
+						<table class="table table-striped">
+							<thead>
+							<tr>
+								<th class="text-center">Pay Date</th>
+								<th class="text-center">Payment Period</th>
+								<th class="text-center">Gross Pay</th>
+								<th class="text-center">Fed Tax</th>
+								<th class="text-center">State Tax</th>
+								<th class="text-center">SSN Tax</th>
+								<th class="text-center">Medicare</th>
+								<th class="text-center">Insurance</th>
+								<th class="text-center">401K</th>
+								<th class="text-center">Net Pay</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr ng-repeat="pay in model.payments">
+								<td class="text-center">{{pay.createDateTime | date:"MM/dd/yyyy"}}</td>
+								<td class="text-center">{{pay.paymentPeriodFrom | date:"MM/dd/yyyy"}} to {{pay.paymentPeriodTo | date:"MM/dd/yyyy"}}</td>
+								<td class="text-center">{{pay.grossPay | currency}}</td>
+								<td class="text-center">{{pay.fedTax | currency}}</td>
+								<td class="text-center">{{pay.stateTax | currency}}</td>
+								<td class="text-center">{{pay.socialSecurityTax | currency}}</td>
+								<td class="text-center">{{pay.medicareTax | currency}}</td>
+								<td class="text-center">{{pay.insurance | currency}}</td>
+								<td class="text-center">{{pay.retirement401K | currency}}</td>
+								<td class="text-center">{{pay.netPay | currency}}</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>

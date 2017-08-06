@@ -11,10 +11,24 @@ App.Angular.getModule()
     
     // init
     $scope.init = function (empId) {
+        
+        $scope.refreshEmp(empId, function () {
+
+            // get payments
+            $scope.refreshPayements(1);
+
+            // get ytd pay
+            $scope.refresthYtdPay();
+        });
+        
+    };
+    
+    // refresh employee details
+    $scope.refreshEmp = function (empId, next) {
         // get employee details
         $http.get("/api/employee/" + empId)
             .success(function (res) {
-                if (res.code != undefined && res.code != 0)
+                if (res.code !== undefined && res.code !== 0)
                 {
                     bootbox.alert(res.text,  function () {
                         window.location = "/";
@@ -22,15 +36,14 @@ App.Angular.getModule()
                 }else {
                     // set employee details
                     $scope.model.employee = res;
-
-                    // get payments
-                    $scope.refreshPayements(1);
                     
-                    // get ytd pay
-                    $scope.refresthYtdPay();
+                    // run next
+                    if (next !== undefined)
+                    {
+                        next();
+                    }
                 }
-            });
-        
+            });  
     };
     
     // get payments for employee
@@ -92,6 +105,30 @@ App.Angular.getModule()
     $scope.$on("pay-added", function () {
         $scope.refreshPayements(1);
         $scope.refresthYtdPay();
-    })
+    });
     
+    // function to save employee changes
+    $scope.saveEmp = function () {
+        // clear errors
+        $scope.status.validationErrors = "";
+        var employee = $scope.model.employee;
+        if ($scope.frm.$valid){
+            $http.post("/api/employee", employee)
+                .success(function (res) {
+                    if (res.code !== undefined && res.code !== 0)
+                    {
+                        bootbox.alert("<span class='text-danger'>" + res.text + "</span>");
+                    }
+                    else
+                    {
+                        // refresh employee
+                        $scope.refreshEmp(employee.id);
+                        // hide save changes button
+                        $scope.frm.$setPristine();
+                    }
+                })
+        }else{
+            $scope.status.validationErrors = "Please fill in all the fields."
+        }
+    }
 }]);

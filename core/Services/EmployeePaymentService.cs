@@ -70,6 +70,9 @@ namespace core.Services
                     }
 
                     // if here update employee
+                    prevEmpl.FirstName = employee.FirstName;
+                    prevEmpl.LastName = employee.LastName;
+                    prevEmpl.W4Allowances = employee.W4Allowances;
                     prevEmpl.Insurance = employee.Insurance;
                     prevEmpl.Retirement401KPercent = employee.Retirement401KPercent;
                     prevEmpl.Retirement401KPreTax = employee.Retirement401KPreTax;
@@ -155,6 +158,17 @@ namespace core.Services
 					Success = false,
 					Errors = "Invalid Pay. Net pay cannot be less than 0."
 				};
+            }
+            
+            // check pay range
+            if (payment.PaymentPeriodFrom > payment.PaymentPeriodTo)
+            {
+                // return error
+                return new EmpPayModels.PaymentFeedback
+                {
+                    Success = false,
+                    Errors = "Invalid Pay Period. Start date should be less than End date."
+                };
             }
 
             // if here valid pay
