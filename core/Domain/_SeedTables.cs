@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using core.Services;
 
 namespace core.Domain
@@ -10,6 +11,7 @@ namespace core.Domain
             SeedTaxPercentages();
             SeedUser();
             SeedEmployees();
+	        SeedPayments();
         }
 
         private static void SeedTaxPercentages()
@@ -95,13 +97,43 @@ namespace core.Domain
             }
         }
 
-//        private static void SeedPayments()
-//        {
-//            using(var db = new AppDbContext())
-//            {
-//			    var employees = 
-//
-//			}
-//        }
+        private static void SeedPayments()
+        {
+	        var random = new Random();
+	        var taxService = new TaxCalculationService();
+            using(var db = new AppDbContext())
+            {
+	            var employees = db.Employees.ToList();
+	            foreach (var employee in employees)
+	            {
+		            for (var i = 59; i > 1; i = i-2)
+		            {
+			            var grosspay = (decimal) Math.Round(random.NextDouble() * 1000, 2);
+			            var deductions = taxService.GetDeductions(employee, grosspay);
+			            var payment = new Payment
+			            {
+				            EmpId = employee.Id,
+				            GrossPay = grosspay,
+				            PaymentPeriodFrom = DateTime.Now.AddDays(-i * 7 + 1),
+				            PaymentPeriodTo = DateTime.Now.AddDays(-(i-2) * 7),
+				            FedTax = deductions.FedTax,
+				            StateTax = deductions.StateTax,
+				            Insurance = deductions.Insurance,
+				            SocialSecurityTax = deductions.SocialSecurityTax,
+				            MedicareTax = deductions.MedicareTax,
+				            Retirement401K = deductions.Retirement401K,
+				            NetPay = deductions.NetPay,
+				            CreateDateTime = DateTime.Now.AddDays((-(i-2)*7) + 1)
+			            };
+			            // add only if valid payment
+			            if (payment.NetPay > 0)
+			            {
+				            db.Payments.Add(payment);
+			            }
+		            }
+	            }
+	            db.SaveChanges();
+            }
+        }
     }
 }
