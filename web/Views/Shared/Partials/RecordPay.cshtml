@@ -8,14 +8,14 @@
         <div class="hidden" ng-bind="model.empId" ng-init="model.empId=@empId"></div>
         <div class="row">
             <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="GrossPay">Salary</label>
+                <div class="form-group required">
+                    <label for="GrossPay" class="control-label">Salary</label>
                     <input type="number" class="form-control" id="GrossPay" ng-model="model.grossPay" ng-change="getAllDeductions()" min="0" required>
                 </div>
             </div>
             <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="PaymentPeriodFrom">Pay Period Start Date</label>
+                <div class="form-group required">
+                    <label for="PaymentPeriodFrom" class="control-label">Pay Period Start Date</label>
                     <div class="input-group">
                         <input type="text" class="form-control" data-date-picker id="PaymentPeriodFrom" ng-model="model.paymentPeriodFrom" required>
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -23,8 +23,8 @@
                 </div>
             </div>
             <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="PaymentPeriodTo">Pay Period End Date</label>
+                <div class="form-group required">
+                    <label for="PaymentPeriodTo" class="control-label">Pay Period End Date</label>
                     <div class="input-group">
                         <input type="text" data-date-picker class="form-control" id="PaymentPeriodTo" ng-model="model.paymentPeriodTo" required>
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>

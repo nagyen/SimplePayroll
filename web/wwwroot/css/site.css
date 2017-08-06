@@ -26,3 +26,9 @@
     width: 100%;
     background-color: #EDF1F2;
 }
+
+/* show asterisk for required fields*/
+.form-group.required .control-label:after {
+    content:"*";
+    color:red;
+}

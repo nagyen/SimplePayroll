@@ -20,20 +20,20 @@
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-sm-4">
-								<div class="form-group">
-									<label for="FirstName">First Name</label>
+								<div class="form-group required">
+									<label for="FirstName" class="control-label">First Name</label>
 									<input type="text" class="form-control" id="FirstName" ng-model="model.employee.firstName" min="0" required>
 								</div>                     
 							</div>
 							<div class="col-sm-4">
-								<div class="form-group">
-									<label for="LastName">Last Name</label>
+								<div class="form-group required">
+									<label for="LastName" class="control-label">Last Name</label>
 									<input type="text" class="form-control" id="LastName" ng-model="model.employee.lastName" min="0" required>
 								</div>                     
 							</div>
 							<div class="col-sm-4">
-								<div class="form-group">
-									<label>State</label>
+								<div class="form-group required">
+									<label class="control-label">State</label>
 									<select class="form-control" ng-model="model.employee.state" required>
 										@foreach (var state in statesList)
 										{
@@ -52,14 +52,14 @@
 								</div>
 							</div>
 							<div class="col-sm-4">
-								<div class="form-group">
-									<label for="Insurance">Insurance</label>
+								<div class="form-group required">
+									<label for="Insurance" class="control-label">Insurance</label>
 									<input type="number" class="form-control" id="Insurance" ng-model="model.employee.insurance" min="0" required>
 								</div>
 							</div>
 							<div class="col-sm-4">
-								<div class="form-group">
-									<label for="W4Allowances">W4 Allowances</label>
+								<div class="form-group required">
+									<label for="W4Allowances"  class="control-label">W4 Allowances</label>
 									<input type="number" class="form-control" id="W4Allowances" ng-model="model.employee.w4Allowances" min="0" required>
 								</div>
 							</div>
@@ -67,8 +67,8 @@
 						
 						<div class="row">
 							<div class="col-sm-4">
-								<div class="form-group">
-									<label for="Retirement401KPercent">401k %</label>
+								<div class="form-group required">
+									<label for="Retirement401KPercent" class="control-label">401k %</label>
 									<input type="number" class="form-control" id="Retirement401KPercent" ng-model="model.employee.retirement401KPercent" min="0" required>
 								</div>
 							</div>

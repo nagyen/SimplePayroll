@@ -15,20 +15,20 @@
 			<form name="frm">
 				<div class="row">
 					<div class="col-sm-4">
-						<div class="form-group">
-		                  <label for="FirstName">First Name</label>
+						<div class="form-group required">
+		                  <label for="FirstName" class="control-label">First Name</label>
 		                  <input type="text" class="form-control" id="FirstName" ng-model="model.firstName" required>
 		                </div>
 					</div>
 					<div class="col-sm-4">
-						<div class="form-group">
-		                  <label for="LastName">Last Name</label>
+						<div class="form-group required">
+		                  <label for="LastName" class="control-label">Last Name</label>
 		                  <input type="text" class="form-control" id="LastName" ng-model="model.lastName" required>
 		                </div>
 					</div>
 					<div class="col-sm-4">
-                        <div class="form-group">
-                          <label for="State">State</label>
+                        <div class="form-group required">
+                          <label for="State" class="control-label">State</label>
 	                        <select class="form-control" id="State" ng-model="model.state" required>
 	                            @foreach(var state in statesList)
 	                            {
@@ -40,28 +40,28 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-4">
-						<div class="form-group">
-                        	<label for="SSN">SSN</label>
+						<div class="form-group required">
+                        	<label for="SSN" class="control-label">SSN</label>
 							<input type="text" class="form-control" id="SSN" ng-model="model.ssn" ssn placeholder="###-##-####" required>
 						</div>
 					</div>
 					<div class="col-sm-4">
-						<div class="form-group">
-                        	<label for="Insurance">Insurance</label>
+						<div class="form-group required">
+                        	<label for="Insurance" class="control-label">Insurance</label>
 							<input type="number" class="form-control" id="Insurance" ng-model="model.insurance" min="0" required>
 						</div>
 					</div>
 					<div class="col-sm-4">
-						<div class="form-group">
-                        	<label for="W4Allowances">W4 Allowances</label>
+						<div class="form-group required">
+                        	<label for="W4Allowances" class="control-label">W4 Allowances</label>
 							<input type="number" class="form-control" id="W4Allowances" ng-model="model.w4Allowances" min="0" required>
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-4">
-						<div class="form-group">
-                        	<label for="Retirement401KPercent">401k %</label>
+						<div class="form-group required">
+                        	<label for="Retirement401KPercent" class="control-label">401k %</label>
 							<input type="number" class="form-control" id="Retirement401KPercent" ng-model="model.retirement401KPercent" min="0" required>
 						</div>
 					</div>
