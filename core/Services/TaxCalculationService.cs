@@ -152,5 +152,41 @@ namespace core.Services
 
             return Math.Round(finalpay, 2);
         }
+	    
+	    // calculate all deductions for employee salary
+	    public TaxModels.Deductions GetDeductions(Employee employee, decimal grosspay)
+	    {
+		    // calculate taxable income
+		    var taxableIncome = CalculateTaxableIncome(employee, grosspay);
+			    
+		    //w4 allowances
+		    var w4Allowances = CalculateW4AllowanceAmount(employee);
+			    
+		    // calculate 401k amount
+		    var retirement = Calculate401KAmount(employee, grosspay);
+			    
+		    // calculate all taxes
+		    var fedTax = CalculateFedTaxAmount(taxableIncome);
+		    var stateTax = CalculateStateTaxAmount(taxableIncome, employee.State);
+		    var socialTax = CalculateSocialTaxAmount(grosspay);
+		    var medicareTax = CalculateMedicareTaxAmount(grosspay);
+
+		    // calculate final pay
+		    var finalpay = grosspay - (fedTax + stateTax + socialTax + medicareTax + employee.Insurance + retirement);
+
+		    return new TaxModels.Deductions
+		    {
+			    TaxableIncome = taxableIncome,
+			    Retirement401K = retirement,
+			    Insurance = employee.Insurance,
+			    W4Allowances = w4Allowances,
+			    FedTax = fedTax,
+			    StateTax = stateTax,
+			    SocialSecurityTax = socialTax,
+			    MedicareTax = medicareTax,
+			    NetPay = finalpay
+		    };
+	    }
+	    
     }
 }

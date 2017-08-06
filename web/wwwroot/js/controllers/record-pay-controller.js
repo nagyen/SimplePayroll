@@ -51,7 +51,7 @@
                   model.insurance = res.insurance;
                   model.fedTax = res.fedTax;
                   model.stateTax = res.stateTax;
-                  model.socialSecurityTax = res.socialTax;
+                  model.socialSecurityTax = res.socialSecurityTax;
                   model.medicareTax = res.medicareTax;
                   model.netPay = res.netPay;
                   model.w4Allowances = res.w4Allowances;

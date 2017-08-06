@@ -81,38 +81,9 @@ namespace web.Controllers
 			    // get the employee details
 			    var employee = await PaymentService.GetEmployee(empId);
 			    
-			    var taxCalculationService = new core.Services.TaxCalculationService();
+			    var deductions = new core.Services.TaxCalculationService().GetDeductions(employee, grosspay);
 			    
-			    // calculate taxable income
-			    var taxableIncome = taxCalculationService.CalculateTaxableIncome(employee, grosspay);
-			    
-			    //w4 allowances
-			    var w4Allowances = taxCalculationService.CalculateW4AllowanceAmount(employee);
-			    
-			    // calculate 401k amount
-			    var retirement = taxCalculationService.Calculate401KAmount(employee, grosspay);
-			    
-			    // calculate all taxes
-			    var fedTax = taxCalculationService.CalculateFedTaxAmount(taxableIncome);
-			    var stateTax = taxCalculationService.CalculateStateTaxAmount(taxableIncome, employee.State);
-			    var socialTax = taxCalculationService.CalculateSocialTaxAmount(grosspay);
-			    var medicareTax = taxCalculationService.CalculateMedicareTaxAmount(grosspay);
-
-			    // calculate final pay
-			    var finalpay = grosspay - (fedTax + stateTax + socialTax + medicareTax + employee.Insurance + retirement);
-
-			    return Ok(new
-			    {
-				    taxableIncome = taxableIncome,
-				    retirement401K = retirement,
-				    insurance = employee.Insurance,
-				    w4Allowances = w4Allowances,
-				    fedTax = fedTax,
-				    stateTax = stateTax,
-				    socialTax = socialTax,
-				    medicareTax = medicareTax,
-				    netPay = finalpay
-			    });
+			    return Ok(deductions);
 		    }
 		    catch (Exception)
 		    {
