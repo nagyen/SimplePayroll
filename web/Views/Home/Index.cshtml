@@ -26,30 +26,26 @@
                 </div>      
 
                 <div ng-if="status.Register">
-                    <div class="form-group">
-                      <label for="Username">User Name:</label>
+                    <div class="form-group required">
+                      <label for="Username" class="control-label">User Name:</label>
                       <input type="text" class="form-control" id="Username" ng-model="model.Username" required>
                     </div>
-                    <div class="form-group">
-                      <label for="FirstName">First Name:</label>
+                    <div class="form-group required">
+                      <label for="FirstName" class="control-label">First Name:</label>
                       <input type="text" class="form-control" id="FirstName" ng-model="model.FirstName" required>
                     </div>
-                    <div class="form-group">
-                      <label for="LastName">Last Name:</label>
+                    <div class="form-group required">
+                      <label for="LastName" class="control-label">Last Name:</label>
                       <input type="text" class="form-control" id="LastName" ng-model="model.LastName" required>
                     </div>
-                    <div class="form-group">
-                      <label for="pwd">Password:</label>
+                    <div class="form-group required">
+                      <label for="pwd" class="control-label">Password:</label>
                       <input type="password" class="form-control" id="pwd" ng-model="model.Password" required>
                     </div>
-                    <div class="form-group" ng-if="status.Register">
-                      <label for="cpwd">Confirm Password:</label>
+                    <div class="form-group required" ng-if="status.Register">
+                      <label for="cpwd" class="control-label">Confirm Password:</label>
                       <input type="password" class="form-control" id="cpwd" ng-model="model.ConfirmPassword" required>
                     </div>
-                    <div ng-if="!status.Register">      
-                        <a href="javascript:;;" type="button" class="btn btn-primary" ng-click="login()">Login</a>
-                        <a href="javascript:;;" type="button" class="btn btn-link" ng-click="switchScreen(true)">Register</a>
-                    </div>  
                     <a href="javascript:;;" type="button" class="btn btn-primary" ng-click="register()">Register</a>
                     <a href="javascript:;;" type="button" class="btn btn-link" ng-click="switchScreen(false)">Login</a>
                 </div>
