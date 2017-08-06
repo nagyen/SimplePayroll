@@ -75,9 +75,9 @@ namespace web.Controllers.Web
         }
         
         // record employee pay partial
-        public IActionResult RecordPayDialog(long empId)
+        public IActionResult RecordPayDialog(long id)
         {
-            return View("Partials/RecordPay");
+            return View("Partials/RecordPay", id);
         }
     }
 }

@@ -1,11 +1,88 @@
-﻿@{
+﻿@model long
+@{
     Layout = null;
+    var empId = Model;
 }
 <div ng-controller="RecordPayController">
     <form name="frm">
+        <div class="hidden" ng-model="model.empId" ng-init="model.empId=@empId"></div>
         <div class="row">
-            <div >
-                
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="GrossPay">Salary</label>
+                    <input type="number" class="form-control" id="GrossPay" ng-model="model.grossPay" min="0" required>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="PaymentPeriodFrom">Pay Period Start Date</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" data-date-picker id="PaymentPeriodFrom" ng-model="model.paymentPeriodFrom" required>
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="PaymentPeriodTo">Pay Period End Date</label>
+                    <div class="input-group">
+                        <input type="text" data-date-picker class="form-control" id="PaymentPeriodTo" ng-model="model.paymentPeriodTo" required>
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="Insurance">Insurance</label>
+                    <input type="number" class="form-control" id="Insurance" ng-model="model.insurance" min="0" required>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="FedTax">Fed Tax</label>
+                    <div class="field-readonly" id="FedTax" ng-bind="model.fedTax"></div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="StateTax">StateTax</label>
+                    <div class="field-readonly" id="StateTax" ng-bind="model.stateTax"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="SocialSecurityTax">Social Security Tax</label>
+                    <div class="field-readonly" id="SocialSecurityTax" ng-bind="model.socialSecurityTax"></div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="MedicareTax">Medicare Tax</label>
+                    <div class="field-readonly" id="MedicareTax" ng-bind="model.medicareTax"></div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="Retirement401K">401K</label>
+                    <div class="field-readonly" id="Retirement401K" ng-model="model.retirement401K"></div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="NetPay">Net Pay</label>
+                    <div class="field-readonly" id="NetPay" ng-model="model.netPay"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-6 text-right">
+                <span class="text-danger" ng-bind="status.validationErrors"></span>
+                <a href="javascript:;;" class="btn btn-link" ng-click="cancel()">Cancel</a>						
+                <a href="javascript:;;" class="btn btn-primary" ng-click="pay()">Pay</a>
             </div>
         </div>
     </form>

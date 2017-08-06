@@ -20,7 +20,7 @@ namespace core.Domain
         public decimal SocialSecurityTax { get; set; }
         public decimal MedicareTax { get; set; }
         public decimal Insurance { get; set; }
-        public decimal Retirement401k { get; set; }
+        public decimal Retirement401K { get; set; }
         public decimal NetPay { get; set; }
         
         public DateTime CreateDateTime { get; set; }

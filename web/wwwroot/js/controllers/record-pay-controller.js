@@ -8,7 +8,7 @@
   $scope.model = {};
 
   // function to save payment
-  $scope.save = function(){
+  $scope.pay = function(){
     var model = $scope.model;
     $scope.status.validationErrors = "";
     if($scope.frm.$valid){
@@ -19,11 +19,11 @@
               bootbox.alert(res.text);
           }else {
             // emit event to refresh payment list
-              
+              $rootScope.$broadcast("pay-added");
           }
       })
     }else {
-      $scope.status.validationErrors = "Please fill in all the fields."
+      $scope.status.validationErrors = "Please fill in all the required fields."
     }
   };
 

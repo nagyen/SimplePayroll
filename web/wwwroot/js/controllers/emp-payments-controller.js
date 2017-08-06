@@ -58,7 +58,7 @@ App.Angular.getModule()
     $scope.recordPay = function(){
         var empId = $scope.model.employee.id;
         // show dialog
-        $http.get("/employee/recordPayDialog", empId)
+        $http.get("/employee/recordPayDialog/"+ empId)
             .success(function(res){
                 var modal = bootbox.dialog({
                     title: "Record Pay",
@@ -68,8 +68,15 @@ App.Angular.getModule()
                 
                 // compile new conroller
                 App.Angular.compileNew();
+                //init form controls
+                App.Forms.setForm(modal);
             })
 
-    }
+    };
+    
+    // check for pay-added event and update listing
+    $scope.$on("pay-added", function () {
+        $scope.refreshPayements(1);
+    })
     
 }]);

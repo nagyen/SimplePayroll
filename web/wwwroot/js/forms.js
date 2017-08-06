@@ -1,9 +1,9 @@
 ﻿// form helper module
-App.module("Form", function(moduleScope) {
+App.module("Forms", function(moduleScope) {
 
     // function to build date picker from selector
     moduleScope.setForm = function(sel) {
-        $(sel).closest("input[data-date-picker]").datepicker({
+        $(sel).find("input[data-date-picker]").datepicker({
             autoclose: true,
             todayHighlight: true
         });
