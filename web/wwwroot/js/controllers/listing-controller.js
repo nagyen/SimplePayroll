@@ -22,13 +22,21 @@
             });
             return req;
         };
+        
+        // formatters
+        var formatters = {
+            "link": function (col, row) {
+                var url = "/employee/" + row.empId + "/payments";
+                return "<a href='"+ url +"'>" + row.fullName + "</a>"
+            }
+        };
 
         // make grid
         $("#employee-listing").bootgrid({
             ajax: true,
             url: "/employee/getListFiltered",
             requestHandler: filters,
-            formatters: {},
+            formatters: formatters,
             rowCount: [10, 25, -1]
         }).on("loaded.rs.jquery.bootgrid", function (e) {
             // move any header appends
