@@ -29,11 +29,11 @@
 
 ## Tables
 
-* Authentication
-  - Id (long)
-  - AuthKey (Guid)
-  - UserId (long)
-  - CreateDateTime (DateTime)
+  * Authentication
+    - Id (long)
+    - AuthKey (Guid)
+    - UserId (long)
+    - CreateDateTime (DateTime)
   
 * User
   - Id (long)
