@@ -85,6 +85,7 @@ Run either of the following commands from project root
 ## Steps to run using docker
 
 [Install Docker](https://docs.docker.com/engine/installation/#desktop)
+
 Run the following commands from project root
 
 * $ docker run --rm -p 5000:5000 nyendluri/greatbank-web:latest
