@@ -34,7 +34,6 @@
     - AuthKey (Guid)
     - UserId (long)
     - CreateDateTime (DateTime)
-
   * User
     - Id (long)
     - Username (string)
