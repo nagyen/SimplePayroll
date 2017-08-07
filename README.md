@@ -30,48 +30,46 @@
 ## Tables
 
 * Authentication
-  * Id (long)
-  * AuthKey (Guid)
-  * UserId (long)
-  * CreateDateTime (DateTime)
-  
+  - Id (long)
+  - AuthKey (Guid)
+  - UserId (long)
+  - CreateDateTime (DateTime)
 * User
-  * Id (long)
-  * Username (string)
-  * FirstName (string)
-  * LastName (string)
-  * Password (string)
-  * CreateDateTime (DateTime)
-  
+  - Id (long)
+  - Username (string)
+  - FirstName (string)
+  - LastName (string)
+  - Password (string)
+  - CreateDateTime (DateTime)
 * Employee
-  * Id (long)
-  * FirstName (string)
-  * LastName (string)
-  * State (string)
-  * W4Allowances (int)
-  * SSN (string)
-  * Insurance (decimal)
-  * Reitirement401KPercent(decimal)
-  * Reitirement401KPreTax (bool)
-  * CreateDateTime (DateTime)
+  - Id (long)
+  - FirstName (string)
+  - LastName (string)
+  - State (string)
+  - W4Allowances (int)
+  - SSN (string)
+  - Insurance (decimal)
+  - Reitirement401KPercent(decimal)
+  - Reitirement401KPreTax (bool)
+  - CreateDateTime (DateTime)
 * Payment
-  * Id (long)
-  * EmplId (long)
-  * GrossPay(decimal)
-  * PaymentPeriodFrom (DateTime)
-  * PaymentPeriodTo (DateTime)
-  * FedTax (decimal)
-  * StateTax (decimal)
-  * SocialSecurityTax (decimal)
-  * MedicareTax (decimal)
-  * Insurance (decimal)
-  * Reitirement401K(decimal)
-  * NetPay (decimal)
-  * CreateDateTime (DateTime)
+  - Id (long)
+  - EmplId (long)
+  - GrossPay(decimal)
+  - PaymentPeriodFrom (DateTime)
+  - PaymentPeriodTo (DateTime)
+  - FedTax (decimal)
+  - StateTax (decimal)
+  - SocialSecurityTax (decimal)
+  - MedicareTax (decimal)
+  - Insurance (decimal)
+  - Reitirement401K(decimal)
+  - NetPay (decimal)
+  - CreateDateTime (DateTime)
 * TaxPercentage
-  * Id (decimal)
-  * TaxCode (string)
-  * Percent (decimal)
+  - Id (decimal)
+  - TaxCode (string)
+  - Percent (decimal)
 
 ----
 
@@ -92,3 +90,5 @@ Run the following commands from project root
 * $ docker run --rm -p 5000:5000 nyendluri/greatbank-web:latest
 
 > Note: If port 5000 is not available please map to any other available port
+
+----
