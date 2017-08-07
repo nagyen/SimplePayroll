@@ -34,45 +34,43 @@
     - AuthKey (Guid)
     - UserId (long)
     - CreateDateTime (DateTime)
-  
-* User
-  - Id (long)
-  - Username (string)
-  - FirstName (string)
-  - LastName (string)
-  - Password (string)
-  - CreateDateTime (DateTime)
-  
-* Employee
-  - Id (long)
-  - FirstName (string)
-  - LastName (string)
-  - State (string)
-  - W4Allowances (int)
-  - SSN (string)
-  - Insurance (decimal)
-  - Reitirement401KPercent(decimal)
-  - Reitirement401KPreTax (bool)
-  - CreateDateTime (DateTime)
-  
-* Payment
-  - Id (long)
-  - EmplId (long)
-  - GrossPay(decimal)
-  - PaymentPeriodFrom (DateTime)
-  - PaymentPeriodTo (DateTime)
-  - FedTax (decimal)
-  - StateTax (decimal)
-  - SocialSecurityTax (decimal)
-  - MedicareTax (decimal)
-  - Insurance (decimal)
-  - Reitirement401K(decimal)
-  - NetPay (decimal)
-  - CreateDateTime (DateTime)
-* TaxPercentage
-  - Id (decimal)
-  - TaxCode (string)
-  - Percent (decimal)
+
+  * User
+    - Id (long)
+    - Username (string)
+    - FirstName (string)
+    - LastName (string)
+    - Password (string)
+    - CreateDateTime (DateTime)
+  * Employee
+    - Id (long)
+    - FirstName (string)
+    - LastName (string)
+    - State (string)
+    - W4Allowances (int)
+    - SSN (string)
+    - Insurance (decimal)
+    - Reitirement401KPercent(decimal)
+    - Reitirement401KPreTax (bool)
+    - CreateDateTime (DateTime)
+  * Payment
+    - Id (long)
+    - EmplId (long)
+    - GrossPay(decimal)
+    - PaymentPeriodFrom (DateTime)
+    - PaymentPeriodTo (DateTime)
+    - FedTax (decimal)
+    - StateTax (decimal)
+    - SocialSecurityTax (decimal)
+    - MedicareTax (decimal)
+    - Insurance (decimal)
+    - Reitirement401K(decimal)
+    - NetPay (decimal)
+    - CreateDateTime (DateTime)
+  * TaxPercentage
+    - Id (decimal)
+    - TaxCode (string)
+    - Percent (decimal)
 
 ----
 
