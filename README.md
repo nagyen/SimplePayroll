@@ -34,6 +34,7 @@
   - AuthKey (Guid)
   - UserId (long)
   - CreateDateTime (DateTime)
+  
 * User
   - Id (long)
   - Username (string)
@@ -41,6 +42,7 @@
   - LastName (string)
   - Password (string)
   - CreateDateTime (DateTime)
+  
 * Employee
   - Id (long)
   - FirstName (string)
@@ -52,6 +54,7 @@
   - Reitirement401KPercent(decimal)
   - Reitirement401KPreTax (bool)
   - CreateDateTime (DateTime)
+  
 * Payment
   - Id (long)
   - EmplId (long)
