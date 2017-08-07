@@ -25,7 +25,7 @@ namespace web.Controllers
         }
 
 		// write cookies
-		protected void WriteCookies(string setting, string settingValue)
+		protected void WriteCookies(string setting, string settingValue, int expiry = 1)
 		{
 			// create server only cookie
 			CookieOptions options = new CookieOptions()
@@ -33,7 +33,7 @@ namespace web.Controllers
 				Path = "/",
 				HttpOnly = true,
 				Secure = false,
-				Expires = DateTime.Now.AddHours(1)
+				Expires = DateTime.Now.AddHours(expiry)
 			};
 			// write
 			Response.Cookies.Append(setting, settingValue, options);
@@ -63,7 +63,14 @@ namespace web.Controllers
 			WriteCookies(_userCookie, userId.ToString());
 			WriteCookies(_authCookie, key.ToString());
 		}
-
+		
+		// set authentication key
+		public void RemoveAuth()
+		{
+			WriteCookies(_userCookie, "", -1);
+			WriteCookies(_authCookie, "", -1);
+		}
+		
 		// check if user is authenticated
 		public async Task<bool> CheckAccess()
 		{

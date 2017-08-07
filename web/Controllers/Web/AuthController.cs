@@ -65,8 +65,12 @@ namespace web.Controllers
         {
             if (await CheckAccess())
             {
-                await Authservice.Logout(GetCurrentUser());
+                Authservice.Logout(GetCurrentUser());
             }
+            
+            // clear auth cookies
+            RemoveAuth();
+            
             return Redirect("/");
         }
     }

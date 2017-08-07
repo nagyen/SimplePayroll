@@ -131,32 +131,17 @@ namespace core.Services
             }
         }
 
-        // logout all user sessions by user name
-        public async Task Logout(string username)
-        {
-            using (var db = new AppDbContext())
-            {
-                var user = await db.Users.FirstOrDefaultAsync(x => x.Username.ToLower() == username.ToLower());
-                if (user != null)
-                {
-                    await Logout(user.Id);
-                }
-
-            }
-        }
-
         // logout all user sessions by id
-        public async Task Logout(long userId)
+        public void Logout(long userId)
         {
             using (var db = new AppDbContext())
             {
-                var auth = await db.Auths.FirstOrDefaultAsync(x => x.UserId == userId);
-                // check if exists
-                if (auth != null)
+                var auths = db.Auths.Where(x => x.UserId == userId).ToList();
+                foreach (var auth in auths)
                 {
                     // remove authentication
                     db.Remove(auth);
-                    await db.SaveChangesAsync();
+                    db.SaveChanges();
                 }
             }
         }

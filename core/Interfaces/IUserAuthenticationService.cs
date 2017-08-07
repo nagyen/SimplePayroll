@@ -16,11 +16,8 @@ namespace core
         // logout current session using authkey
         Task Logout(Guid authkey);
 
-        // logout all user sessions by user name
-        Task Logout(string username);
-
         // logout all user sessions by id
-        Task Logout(long userId);
+        void Logout(long userId);
 
         // function to check if a user is authenticated
         Task<bool> IsAuthenticated(Guid authKey);
