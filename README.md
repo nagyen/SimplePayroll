@@ -34,6 +34,7 @@
   * AuthKey (Guid)
   * UserId (long)
   * CreateDateTime (DateTime)
+  
 * User
   * Id (long)
   * Username (string)
@@ -41,6 +42,7 @@
   * LastName (string)
   * Password (string)
   * CreateDateTime (DateTime)
+  
 * Employee
   * Id (long)
   * FirstName (string)
