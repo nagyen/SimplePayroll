@@ -88,7 +88,7 @@ Run either of the following commands from project root
 
 Run the following commands from project root
 
-* $ docker run --rm -p 5000:5000 nyendluri/greatbank-web:latest
+* $ docker run --rm -p 5000:5000 nyendluri/simple-payroll:latest
 
 > Note: If port 5000 is not available please map to any other available port
 
